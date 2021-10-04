@@ -1,0 +1,47 @@
+{
+  "name": "@sngn/js-helpers",
+  "version": "0.1.0",
+  "description": "javascript/typescript helpers library",
+  "keywords": [
+    "javascript",
+    "typescript"
+  ],
+  "author": "Maximilian Stejskal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sngn/sngn.git",
+    "directory": "packages/js-helpers"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./testFunctions": {
+      "import": "./dist/esm/testFunctions/index.js",
+      "require": "./dist/cjs/testFunctions/index.js",
+      "default": "./dist/esm/testFunctions/index.js"
+    }
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "typings": "./dist/typings",
+  "sideEffects": false,
+  "dependencies": {
+  },
+  "devDependencies": {
+    "esbuild": "^0.13.8",
+    "esbuild-node-externals": "^1.3.0",
+    "esbuild-plugin-d.ts": "^1.0.6",
+    "shx": "^0.3.3"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "cbuild": "npm run clean && npm run build",
+    "clean": "shx rm -rf ./dist/*",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
