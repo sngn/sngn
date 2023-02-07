@@ -1,42 +1,42 @@
 {
-  "name": "@sngn/js-helpers",
+  "name": "@sngn/logger",
   "version": "0.1.0",
-  "description": "javascript/typescript helpers library",
+  "description": "logging utility",
   "keywords": [
-    "javascript",
+    "logging",
     "typescript"
   ],
   "author": "Maximilian Stejskal",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/sngn/sngn.git",
-    "directory": "packages/js-helpers"
+    "directory": "pkgs/logger"
   },
-  "license": "MIT",
   "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "typings": "./dist/typings/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "default": "./dist/esm/index.js"
-    },
-    "./testFunctions": {
-      "import": "./dist/esm/testFunctions/index.js",
-      "require": "./dist/cjs/testFunctions/index.js",
-      "default": "./dist/esm/testFunctions/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
     }
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "typings": "./dist/typings",
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "dependencies": {
+    "chalk": "^4.1.2"
   },
   "devDependencies": {
     "esbuild": "^0.13.8",
     "esbuild-node-externals": "^1.3.0",
     "esbuild-plugin-d.ts": "^1.0.6",
-    "shx": "^0.3.3"
+    "shx": "^0.3.3",
+    "typescript": "^4.4.4"
   },
   "scripts": {
     "build": "node build.js",

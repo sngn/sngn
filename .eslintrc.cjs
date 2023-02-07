@@ -27,7 +27,7 @@ module.exports = {
     //globalThis: "readonly",
   },
   ignorePatterns: [
-    "/packages/**/dist/*",
+    "/pkgs/**/dist/*",
   ],
   overrides: [
     { // svelte files

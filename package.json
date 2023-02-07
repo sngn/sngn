@@ -4,7 +4,7 @@
   "author": "Maximilian Stejskal",
   "repository": "github:sngn/public",
   "workspaces": [
-    "./packages/*"
+    "./pkgs/*"
   ],
   "engines": {
     "node": ">=16.8.0",
