@@ -1,6 +1,6 @@
 {
   "name": "@sngn/js-helpers",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "javascript/typescript helpers library",
   "keywords": [
     "javascript",
@@ -33,8 +33,7 @@
     "dist"
   ],
   "sideEffects": false,
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "esbuild": "^0.17.6",
     "esbuild-node-externals": "^1.6.0",
