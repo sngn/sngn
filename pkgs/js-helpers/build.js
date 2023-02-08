@@ -12,6 +12,7 @@ const optCommon = {
     "./src/testFunctions/index.ts",
   ],
   logLevel: "info",
+  //logLevel: "verbose",
   platform: "node",
   sourcemap: true,
   target: "node16",
@@ -20,15 +21,21 @@ const optCommon = {
 const optCjs = {
   ...optCommon,
   format: "cjs",
+  outExtension: {
+    ".js": ".cjs",
+  },
   outdir: "dist/cjs",
   plugins: [
     nodeExternalsPlugin (),
   ],
 };
 
-const optEs6 = {
+const optEsm = {
   ...optCommon,
   format: "esm",
+  outExtension: {
+    ".js": ".mjs",
+  },
   outdir: "dist/esm",
   plugins: [
     dtsPlugin (),
@@ -38,5 +45,5 @@ const optEs6 = {
 };
 
 build (optCjs);
-build (optEs6);
+build (optEsm);
 

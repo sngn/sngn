@@ -1,0 +1,5 @@
+packages:
+  - "pkgs/esbuild-svelte-dts"
+  - "pkgs/js-helpers"
+  - "pkgs/logger"
+

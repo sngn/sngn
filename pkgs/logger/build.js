@@ -13,26 +13,36 @@ const optCommon = {
   logLevel: "info",
   //logLevel: "verbose",
   platform: "node",
-  plugins: [
-    nodeExternalsPlugin (),
-    dtsPlugin (),
-  ],
   sourcemap: true,
-  target: "node14",
+  target: "node16",
 };
 
 const optCjs = {
   ...optCommon,
   format: "cjs",
-  outfile: "dist/index.cjs",
+  outExtension: {
+    ".js": ".cjs",
+  },
+  outdir: "dist/cjs",
+  plugins: [
+    nodeExternalsPlugin (),
+  ],
 };
 
-const optEs6 = {
+const optEsm = {
   ...optCommon,
   format: "esm",
-  outfile: "dist/index.js",
+  outExtension: {
+    ".js": ".mjs",
+  },
+  outdir: "dist/esm",
+  plugins: [
+    dtsPlugin (),
+    nodeExternalsPlugin (),
+  ],
+  splitting: true,
 };
 
 build (optCjs);
-build (optEs6);
+build (optEsm);
 
