@@ -9,6 +9,9 @@ import {logLevels as defaultLogLevels} from "./defaultLogLevels";
 import type {LogFunction} from "./shared";
 import type {LogLevel} from "./defaultLogLevels";
 
+export type {LogFunction};
+export * as defaults from "./defaultLogLevels";
+
 export interface Options<TLogLevel extends string> {
   logFunctions ?:Partial<Record<TLogLevel, LogFunction>>;
   logLevels ?:TLogLevel[];
@@ -22,10 +25,8 @@ interface LoggerBase<TLogLevel extends string> {
 export type LogFunctions<TLogLevel extends string> = Partial<Record<TLogLevel, LogFunction>>; /* eslint-disable-line max-len */
 type IsLevelProps<TLogLevel extends string> = Partial<{ [L in TLogLevel as `is${Capitalize<L>}`] :boolean; }>;
 export type Logger<TLogLevel extends string>
-= LoggerBase<TLogLevel> & LogFunctions<TLogLevel> & IsLevelProps<TLogLevel>;
-
-export * from "./shared";
-export * as defaults from "./defaultLogLevels";
+= LoggerBase<TLogLevel> & Required<LogFunctions<TLogLevel>> & Required<IsLevelProps<TLogLevel>>; /* eslint-disable-line max-len */
+type LoggerGenerator<TLogLevel extends string = LogLevel> = (lvl ?:TLogLevel) => Logger<TLogLevel>; /* eslint-disable-line max-len */
 
 // ### ### ###
 
@@ -45,7 +46,7 @@ export const hasLogLevel = <TLogLevel extends string>(logLevels :TLogLevel[]) =>
 
 export function createLogger<TLogLevel extends string = LogLevel> (
     options :Options<TLogLevel> = {}
-) :(l ?:TLogLevel) => Logger<TLogLevel> {
+) :LoggerGenerator<TLogLevel> {
   const {
     logFunctions = defaultLogFunctions as LogFunctions<TLogLevel>,
     logLevels = defaultLogLevels as unknown as TLogLevel[],
