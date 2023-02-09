@@ -54,7 +54,7 @@ export function createLogger<TLogLevel extends string = LogLevel> (
   const getLevels = getLogLevels (logLevels);
   const hasLevel = hasLogLevel (logLevels);
 
-  function Logger (level ?:TLogLevel) :Logger<TLogLevel> {
+  function logger (level ?:TLogLevel) :Logger<TLogLevel> {
     const levels = getLevels (level);
     const levelsHas = (lvl :string|TLogLevel) :lvl is TLogLevel => levels.includes (lvl as unknown as TLogLevel); /* eslint-disable-line max-len */
 
@@ -66,33 +66,34 @@ export function createLogger<TLogLevel extends string = LogLevel> (
 
     const handler :ProxyHandler<Logger<TLogLevel>> = {
       get: (target, prop, receiver) => {
-        let rv :undefined|boolean|LogFunction;
+        let rv :LogFunction|boolean|ReturnType<
+          typeof Reflect.get<Logger<TLogLevel>, string>
+        >;
 
         if (isString (prop)) {
           if (hasLevel (prop)) {
-            if (levelsHas (prop)) {
-              //rv = logFunctions [prop as unknown as TLogLevel];
-              rv = logFunctions [prop];
-            }
-
-            rv = rv ?? emptyLogFunction;
+            rv = levelsHas (prop)
+              ? logFunctions [prop] ?? emptyLogFunction
+              : emptyLogFunction;
           } else {
             const unprefixed = prop.replace (/^is/, "").toLowerCase ();
 
-            if (hasLevel (unprefixed)) {
-              rv = levelsHas (unprefixed);
-            }
+            rv = hasLevel (unprefixed)
+              ? levelsHas (unprefixed)
+              : Reflect.get (target, prop, receiver);
           }
+        } else {
+          rv = Reflect.get (target, prop, receiver);
         }
 
-        return rv === void 0 ? Reflect.get (target, prop, receiver) : rv;
+        return rv;
       },
     };
 
     return new Proxy (target as Logger<TLogLevel>, handler);
   }
 
-  return Logger;
+  return logger;
 }
 
 // doc loglevels need to be lowercase, sorted in order of most to least output
