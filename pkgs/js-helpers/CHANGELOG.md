@@ -1,5 +1,11 @@
 # @sngn/js-helpers
 
+## 0.2.1
+
+### Patch Changes
+
+- d0af8ca: Last package was not based on correct build.
+
 ## 0.2.0
 
 ### Minor Changes
