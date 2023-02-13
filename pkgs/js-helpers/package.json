@@ -16,14 +16,16 @@
   "type": "module",
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.mjs",
-  "typings": "./dist/typings",
+  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.mjs",
       "require": "./dist/cjs/index.cjs",
       "default": "./dist/esm/index.mjs"
     },
     "./testFunctions": {
+      "types": "./dist/types/testFunctions/index.d.ts",
       "import": "./dist/esm/testFunctions/index.mjs",
       "require": "./dist/cjs/testFunctions/index.cjs",
       "default": "./dist/esm/testFunctions/index.mjs"
@@ -43,7 +45,7 @@
   },
   "scripts": {
     "build": "node build.js",
-    "cbuild": "npm run clean && npm run build",
+    "cbuild": "pnpm run clean && pnpm run build",
     "clean": "shx rm -f /tmp/@sngn/js-helpers/.esbuild/.tsbuildinfo; shx rm -rf ./dist/*",
     "test": "echo \"Error: no test specified\" && exit 1"
   }

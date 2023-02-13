@@ -1,2 +1,3 @@
-export * as testFunctions from "./testFunctions";
+export * from "./testFunctions";
+export * from "./types";
 

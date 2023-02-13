@@ -1,16 +1,20 @@
+/* eslint-env node */
+
 import {build} from "esbuild";
 import {dtsPlugin} from "esbuild-plugin-d.ts";
 import {nodeExternalsPlugin} from "esbuild-node-externals";
 
 // ### ### ###
 
+const entryPoints = [
+  "./src/index.ts",
+  "./src/testFunctions/index.ts",
+];
+
 const optCommon = {
   bundle: true,
   color: true,
-  entryPoints: [
-    "./src/index.ts",
-    "./src/testFunctions/index.ts",
-  ],
+  entryPoints,
   logLevel: "info",
   //logLevel: "verbose",
   platform: "node",
