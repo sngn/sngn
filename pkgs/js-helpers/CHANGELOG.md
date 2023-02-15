@@ -1,5 +1,12 @@
 # @sngn/js-helpers
 
+## 0.2.2
+
+### Patch Changes
+
+- 02b2b0f: Added "react" function
+- 197440a: Added hop function
+
 ## 0.2.1
 
 ### Patch Changes
