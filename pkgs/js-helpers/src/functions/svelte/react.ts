@@ -1,8 +1,8 @@
 /* this is a helper for svelte $: syntax.
  * tsc would complain about a function fn :() => void
- * $: fn(dependsOnThis);
+ * $: fn(reactsToThis);
  * but not about
- * $: react (fn, dependsOnThis);
+ * $: react (fn, reactsToThis);
  */
 export const react = (fn :() => void, ...args :any[]) :void => { fn (); void args; };
 
