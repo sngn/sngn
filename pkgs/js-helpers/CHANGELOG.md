@@ -1,5 +1,11 @@
 # @sngn/js-helpers
 
+## 0.2.3
+
+### Patch Changes
+
+- b352c97: Added 'map' function
+
 ## 0.2.2
 
 ### Patch Changes
