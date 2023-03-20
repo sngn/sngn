@@ -1,5 +1,11 @@
 # @sngn/js-helpers
 
+## 0.2.4
+
+### Patch Changes
+
+- Forgot to build before packaging on last version
+
 ## 0.2.3
 
 ### Patch Changes
