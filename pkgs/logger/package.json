@@ -28,7 +28,7 @@
   ],
   "sideEffects": false,
   "dependencies": {
-    "chalk": "^5.2.0"
+    "chalk-template": "^1.0.0"
   },
   "devDependencies": {
     "esbuild": "^0.17.6",
@@ -41,6 +41,6 @@
     "build": "node build.js",
     "cbuild": "npm run clean && npm run build",
     "clean": "shx rm -f /tmp/@sngn/logger/.esbuild/.tsbuildinfo; shx rm -rf ./dist/*",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   }
 }

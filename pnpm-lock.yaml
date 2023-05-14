@@ -65,14 +65,14 @@ importers:
 
   pkgs/logger:
     specifiers:
-      chalk: ^5.2.0
+      chalk-template: ^1.0.0
       esbuild: ^0.17.6
       esbuild-node-externals: ^1.6.0
       esbuild-plugin-d.ts: ^1.1.0
       shx: ^0.3.4
       typescript: ^4.9.5
     dependencies:
-      chalk: 5.2.0
+      chalk-template: 1.0.0
     devDependencies:
       esbuild: 0.17.6
       esbuild-node-externals: 1.6.0_esbuild@0.17.6
@@ -993,6 +993,13 @@ packages:
     resolution: {integrity: sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==}
     engines: {node: '>=6'}
     dev: true
+
+  /chalk-template/1.0.0:
+    resolution: {integrity: sha512-3B0Wy/RZf/778DODyOZo7AIWS5ibh+o9STMOQCWEBYN2H9AAeXs1F0QQ7kxzVGXnqBOvPrpeSUYIJqXodjRCqw==}
+    engines: {node: '>=14.16'}
+    dependencies:
+      chalk: 5.2.0
+    dev: false
 
   /chalk/2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}

@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-import chalk from "chalk";
+import chalkTemplate from "chalk-template";
 import {hop} from "./shared";
 
 // ### Types
@@ -36,7 +36,7 @@ export const logFunctions = logLevels.reduce ((acc, lvl) => {
   const fn = consoleMethod && hopConsole (consoleMethod)
     /* eslint-disable-next-line no-console */
     ? (...args :any[]) => console [consoleMethod] (
-        chalk`{bold.${levelColor} ${lvl}} ${args.join (" ")}`
+        chalkTemplate`{bold.${levelColor} ${lvl}} ${args.join (" ")}`
     )
     : void 0;
 
