@@ -1,5 +1,5 @@
-import type { Fn } from "$src/types";
-import type { HasMap } from "$src/types";
+import type { Fn } from "../types";
+import type { HasMap } from "../types";
 
 export const map = <A = any, B = any>(
   fn :Fn<A, B>
