@@ -38,7 +38,7 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "build": "node build.js",
+    "build": "node esbuild.js",
     "cbuild": "npm run clean && npm run build",
     "clean": "shx rm -f /tmp/@sngn/logger/.esbuild/.tsbuildinfo; shx rm -rf ./dist/*",
     "test": "node test.js"

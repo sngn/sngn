@@ -19,7 +19,7 @@ const optCommon = {
   //logLevel: "verbose",
   platform: "node",
   sourcemap: true,
-  target: "node16",
+  target: "node18",
 };
 
 const optCjs = {

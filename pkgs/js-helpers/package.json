@@ -44,7 +44,7 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "build": "node build.js",
+    "build": "node esbuild.js",
     "cbuild": "pnpm run clean && pnpm run build",
     "clean": "shx rm -f /tmp/@sngn/js-helpers/.esbuild/.tsbuildinfo; shx rm -rf ./dist/*",
     "test": "echo \"Error: no test specified\" && exit 1"
