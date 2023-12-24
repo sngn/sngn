@@ -31,11 +31,11 @@
     "chalk-template": "^1.0.0"
   },
   "devDependencies": {
-    "esbuild": "^0.17.6",
-    "esbuild-node-externals": "^1.6.0",
-    "esbuild-plugin-d.ts": "^1.1.0",
+    "esbuild": "^0.19.10",
+    "esbuild-node-externals": "^1.12.0",
+    "esbuild-plugin-d.ts": "^1.2.2",
     "shx": "^0.3.4",
-    "typescript": "^4.9.5"
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "build": "node build.js",
