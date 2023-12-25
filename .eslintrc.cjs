@@ -1,8 +1,7 @@
 /* eslint-env node */
 /* eslint-disable sort-keys */
 
-const path = require ("path");
-const typescript = require ("typescript");
+const path = require ("node:path");
 
 const repoRoot = __dirname;
 const configPath = path.join (repoRoot, "tools", "eslint");
@@ -13,71 +12,97 @@ const rules = require (path.join (configPath, "rules.cjs"));
 const rulesSvelte = require (path.join (configPath, "rulesSvelte.cjs"));
 const rulesTs = require (path.join (configPath, "rulesTs.cjs"));
 
-module.exports = {
-  "env": {
-    "es2021": true,
+// ### ### ###
+
+const env = {
+  es2021: true,
+};
+
+const parserOptions = {
+  ecmaFeatures: {
   },
-  "extends": [
+  extraFileExtensions: [".svelte"],
+  project: [
+    "./tsconfig.json",
+    "./pkgs/*/tsconfig.json",
+  ],
+  sourceType: "module",
+  tsconfigRootDir: repoRoot,
+};
+
+module.exports = {
+  env,
+  extends: [
     "eslint:recommended",
   ],
   globals: {
-    //Atomics: "readonly",
-    //PromiseFulfilledResult: "readonly",
-    //SharedArrayBuffer: "readonly",
-    //globalThis: "readonly",
   },
   ignorePatterns: [
     "/pkgs/**/dist/*",
   ],
   overrides: [
     { // svelte files
-      "env": {
-        "browser": true,
-        "es2021": true,
+      env: {
+        ...env,
+        browser: true,
       },
-      "extends": [
-        "eslint:recommended",
+      extends: [
+        "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:svelte/recommended",
       ],
       files: ["*.svelte"],
-      processor: "svelte3/svelte3",
+      parser: "svelte-eslint-parser",
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+      },
       rules: rulesSvelte,
     },
     { // ts files
-      "extends": [
-        "eslint:recommended",
+      extends: [
+        "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
       ],
       files: ["*.ts"],
       rules: rulesTs,
     },
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    ecmaFeatures: {
-      //impliedStrict: true,
+    { // cjs files
+      env: {
+        ...env,
+        node: true,
+      },
+      files: ["*.cjs"],
+      parserOptions: {
+        ...parserOptions,
+        sourceType: "script",
+      },
     },
-    //"ecmaVersion": 12,
-    extraFileExtensions: [".svelte"],
-    project: [
-      "./tsconfig.json",
-      "./packages/*/tsconfig.json",
-    ],
-    "sourceType": "module",
-    tsconfigRootDir: repoRoot,
-  },
-  "plugins": [
-    "svelte3",
+    { // build scripts
+      env: {
+        ...env,
+        node: true,
+      },
+      files: ["esbuild.js"],
+      parserOptions: {
+        ...parserOptions,
+        sourceType: "script",
+      },
+      rules: {
+        ...rules,
+        "no-console": "off",
+      },
+    },
+  ],
+  parser: "@typescript-eslint/parser",
+  parserOptions,
+  plugins: [
     "@typescript-eslint",
   ],
   root: true,
   rules,
   settings: {
-    //"svelte3/ignore-styles": () => true,
-    //"svelte3/named-blocks": true,
-    "svelte3/typescript": typescript,
   },
 };
 
