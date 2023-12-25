@@ -56,10 +56,11 @@ export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => 
     throw new Error (`getTsConfigFromPath Could not find configuration file for typescript, searching from ${searchinitPath}`);
   }
 
+  const readConfigFileOutput = ts.readConfigFile (configFileName, readFile);
   const {
     config : configFileContent,
     error : configFileError,
-  } = (processReadConfigFileOutput ?? noop)(ts.readConfigFile (configFileName, readFile)); /* eslint-disable-line @typescript-eslint/unbound-method */
+  } = (processReadConfigFileOutput ?? noop)(readConfigFileOutput); /* eslint-disable-line @typescript-eslint/unbound-method */
 
   if (configFileError) {
     throw new Error('Malformed tsconfig\n' + JSON.stringify(configFileError, null, 2));
@@ -82,8 +83,11 @@ export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => 
   const rv = {
     basepath,
     configFileContent,
+    configFileError,
     configFileName,
     pcl,
+    readConfigFileOutput,
+    searchinitPath,
   };
 
   return rv;
