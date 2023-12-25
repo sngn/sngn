@@ -14,14 +14,10 @@
     "directory": "pkgs/get-tsconfig-from-path"
   },
   "type": "module",
-  "main": "./dist/cjs/index.cjs",
-  "module": "./dist/esm/index.mjs",
-  "typings": "./dist/typings",
   "exports": {
     ".": {
       "types": "./dist/typings/index.d.ts",
-      "module": "./dist/esm/index.mjs",
-      "default": "./dist/cjs/index.cjs"
+      "default": "./dist/esm/index.mjs"
     }
   },
   "files": [

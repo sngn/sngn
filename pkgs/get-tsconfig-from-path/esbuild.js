@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 import {build} from "esbuild";
 import {dtsPlugin} from "esbuild-plugin-d.ts";
 import {nodeExternalsPlugin} from "esbuild-node-externals";
@@ -16,37 +18,19 @@ const optCommon = {
   target: "node18",
 };
 
-const optCjs = {
-  ...optCommon,
-  format: "cjs",
-  outExtension: {
-    ".js": ".cjs",
-  },
-  outdir: "dist/cjs",
-  plugins: [
-    nodeExternalsPlugin (),
-  ],
-};
-
 const optEsm = {
   ...optCommon,
   format: "esm",
   outExtension: {
     ".js": ".mjs",
   },
-  outdir: "dist/esm",
+  outdir: "dist",
   plugins: [
-    dtsPlugin (),
     nodeExternalsPlugin (),
+    dtsPlugin (),
   ],
   splitting: true,
 };
 
-const cjsbuild = build (optCjs);
-const esmbuild = build (optEsm);
-
-/*const builds = */await Promise.all([
-  cjsbuild,
-  esmbuild,
-]).catch(() => process.exit(1));
+build (optEsm);
 
