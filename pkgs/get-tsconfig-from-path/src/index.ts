@@ -13,6 +13,7 @@ import type {WatchOptions} from "typescript";
 
 type Params = {
   basepath ?:string;
+  processReadConfigFileOutput ?:(output :ReturnType<typeof ts.readConfigFile>) => ReturnType<typeof ts.readConfigFile>;
 
   // ### findConfigFile options
   configName ?:string;
@@ -32,6 +33,8 @@ type Params = {
 
 // ### ### ###
 
+const noop = <T = any>(v :T) :T => v;
+
 export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => {
   const {
     basepath : pbasepath,
@@ -42,6 +45,7 @@ export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => 
     extraFileExtensions,
     fileExists = ts.sys.fileExists,
     parseConfigHost = ts.sys,
+    processReadConfigFileOutput,
     readFile = ts.sys.readFile,
     resolutionStack,
   } = params ?? {};
@@ -55,7 +59,7 @@ export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => 
   const {
     config : configFileContent,
     error : configFileError,
-  } = ts.readConfigFile (configFileName, readFile); /* eslint-disable-line @typescript-eslint/unbound-method */
+  } = (processReadConfigFileOutput ?? noop)(ts.readConfigFile (configFileName, readFile)); /* eslint-disable-line @typescript-eslint/unbound-method */
 
   if (configFileError) {
     throw new Error('Malformed tsconfig\n' + JSON.stringify(configFileError, null, 2));
