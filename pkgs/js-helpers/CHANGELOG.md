@@ -1,5 +1,16 @@
 # @sngn/js-helpers
 
+## 0.2.5
+
+### Patch Changes
+
+- 92868e3: changed build target to node18
+- 2ad35aa: changed custom import paths to relative imports
+- 61461eb: updated build tooling (esbuild+plugins/typescript)
+- 40414ec: Added @\_\_NO_SIDE_EFFECTS\_\_ tags
+- 92868e3: renamed build.js to esbuild.js
+- f0b6dfa: improved type signature of 'isObject' testfunction
+
 ## 0.2.4
 
 ### Patch Changes

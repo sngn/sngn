@@ -1,5 +1,12 @@
 # @sngn/logger
 
+## 0.2.2
+
+### Patch Changes
+
+- 61461eb: updated build tooling (esbuild+plugins/typescript)
+- 92868e3: renamed build.js to esbuild.js
+
 ## 0.2.1
 
 ### Patch Changes
