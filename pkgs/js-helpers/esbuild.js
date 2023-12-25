@@ -6,15 +6,13 @@ import {nodeExternalsPlugin} from "esbuild-node-externals";
 
 // ### ### ###
 
-const entryPoints = [
-  "./src/index.ts",
-  "./src/testFunctions/index.ts",
-];
-
 const optCommon = {
   bundle: true,
   color: true,
-  entryPoints,
+  entryPoints: [
+    "./src/index.ts",
+    "./src/testFunctions/index.ts",
+  ],
   logLevel: "info",
   //logLevel: "verbose",
   platform: "node",
@@ -42,12 +40,17 @@ const optEsm = {
   },
   outdir: "dist/esm",
   plugins: [
-    dtsPlugin (),
     nodeExternalsPlugin (),
+    dtsPlugin (),
   ],
   splitting: true,
 };
 
-build (optCjs);
-build (optEsm);
+const cjsbuild = build (optCjs);
+const esmbuild = build (optEsm);
+
+/*const builds = */await Promise.all([
+  cjsbuild,
+  esmbuild,
+]).catch(() => process.exit(1));
 
