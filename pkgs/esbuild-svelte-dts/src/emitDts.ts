@@ -4,6 +4,7 @@ import {default as ts} from "typescript";
 
 // ### Types
 /* eslint-disable-next-line sort-imports */
+import type {CompilerOptions} from "typescript";
 
 type Params = {
   inputFiles :string[];
@@ -12,12 +13,15 @@ type Params = {
 
 // ### ### ###
 
+const logprefix = "emitDts.ts";
+
 function isSvelteFilepath(filePath :string) {
   return filePath.endsWith (".svelte");
 }
 
-async function createTsCompilerHost(params :Params, options :ts.CompilerOptions, setParentNodes ?:boolean) {
+async function createTsCompilerHost(params :Params, options :CompilerOptions, setParentNodes ?:boolean) {
   const { svelteShimsPath } = params;
+
   const host = ts.createCompilerHost (options, setParentNodes);
   const noSvelteComponentTyped = svelteShimsPath
     .replace(/\\/g, '/')
@@ -28,15 +32,15 @@ async function createTsCompilerHost(params :Params, options :ts.CompilerOptions,
     ...ts.sys,
     readFile(path, encoding = "utf-8") {
       if (isSvelteFilepath (path)) {
-        const alreadySeen = sveltefiles.has(path);
 
-        if (alreadySeen) {
+        if (sveltefiles.has(path)) {
           const content = sveltefiles.get(path);
 
           return content;
         } else {
           const code = ts.sys.readFile(path, 'utf-8')!;
           const isTsFile = /<script\s+[^>]*?lang=('|")(ts|typescript)('|")/.test(code);
+
           const svelte2tsxOutput = svelte2tsx(code, {
               filename: path,
               isTsFile,
@@ -53,18 +57,14 @@ async function createTsCompilerHost(params :Params, options :ts.CompilerOptions,
         return ts.sys.readFile (path, encoding);
       }
     },
-  host.readFile = svelteSys.readFile;
-  host.resolveModuleNames = (
-      moduleNames,
-      containingFile,
-      _reusedNames,
-      _redirectedReference,
-      compilerOptions
-  ) => {
-    return moduleNames.map ((moduleName) => {
-      return resolveModuleName (moduleName, containingFile, compilerOptions);
-    });
+    readDirectory(path, extensions, exclude, include, depth) {
+      const extensionsWithSvelte = (extensions || []).concat (".svelte");
+
+      return ts.sys.readDirectory (path, extensionsWithSvelte, exclude, include, depth);
+    },
   };
+
+  host.readFile = svelteSys.readFile;
   host.resolveModuleNameLiterals = (
       moduleLiterals,
       containingFile,
@@ -79,6 +79,17 @@ async function createTsCompilerHost(params :Params, options :ts.CompilerOptions,
             compilerOptions
         ),
       };
+    });
+  };
+  host.resolveModuleNames = (
+      moduleNames,
+      containingFile,
+      _reusedNames,
+      _redirectedReference,
+      compilerOptions
+  ) => {
+    return moduleNames.map ((moduleName) => {
+      return resolveModuleName (moduleName, containingFile, compilerOptions);
     });
   };
 
@@ -114,11 +125,10 @@ function prepareTsconfig(params :Params) {
   } = params;
 
   const initialpath = inputFiles.find (isSvelteFilepath) ?? process.cwd ();
-  const existingOptions = {
-  };
-  const processReadConfigFileOutput = (
-      { config, error } :ReturnType<typeof ts.readConfigFile>
-  ) :ReturnType<typeof ts.readConfigFile> => {
+  const existingOptions :CompilerOptions = {
+    declaration: true, // Needed for d.ts file generation
+    emitDeclarationOnly: true, // We only want d.ts file generation
+    noEmit: false, // Set to true in case of jsconfig, force false, else nothing is emitted
   };
 
   const additionalParams = {
@@ -128,17 +138,34 @@ function prepareTsconfig(params :Params) {
       isMixedContent: true,
       scriptKind: ts.ScriptKind.Deferred,
     }],
-    processReadConfigFileOutput,
+  };
+
   const tsconfig = getTsconfigFromPath (initialpath, additionalParams);
+  const pcl = tsconfig.pcl!;
+
+  if (
+    pcl.options.moduleResolution === undefined
+    || pcl.options.moduleResolution === ts.ModuleResolutionKind.Classic
+  ) {
+    const moduleResolutionDefault =
+      // NodeJS: up to 4.9, Node10: since 5.0
+      (ts.ModuleResolutionKind as any).NodeJs ?? ts.ModuleResolutionKind.Node10; // Classic if not set, which gives wrong results
+
+    pcl.options.moduleResolution = moduleResolutionDefault;
+  }
+
   return tsconfig;
 }
+
 async function main(params :Params) {
   const {
     inputFiles,
     svelteShimsPath,
   } = params;
 
-  const { pcl } = prepareTsconfig (params);
+  const tsconfig = prepareTsconfig (params);
+  const pcl = tsconfig.pcl!;
+
   const host = await createTsCompilerHost (params, pcl.options);
   const program = ts.createProgram ({
     host,

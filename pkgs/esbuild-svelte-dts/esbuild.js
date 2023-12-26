@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 import {build} from "esbuild";
 import {dtsPlugin} from "esbuild-plugin-d.ts";
 import {nodeExternalsPlugin} from "esbuild-node-externals";
@@ -10,29 +12,25 @@ const optCommon = {
   entryPoints: [
     "./src/index.ts",
   ],
-  //logLevel: "verbose",
   logLevel: "info",
   platform: "node",
+  sourcemap: true,
+  target: "node18",
+};
+
+const optEsm = {
+  ...optCommon,
+  format: "esm",
+  outExtension: {
+    ".js": ".mjs",
+  },
+  outdir: "dist",
   plugins: [
     nodeExternalsPlugin (),
     dtsPlugin (),
   ],
-  sourcemap: true,
-  target: "node14",
+  splitting: true,
 };
 
-const optCjs = {
-  ...optCommon,
-  format: "cjs",
-  outfile: "dist/index.cjs",
-};
-
-const optEs6 = {
-  ...optCommon,
-  format: "esm",
-  outfile: "dist/index.js",
-};
-
-build (optCjs);
-build (optEs6);
+build (optEsm);
 

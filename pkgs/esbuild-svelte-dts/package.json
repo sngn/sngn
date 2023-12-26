@@ -16,36 +16,36 @@
     "directory": "pkgs/esbuild-svelte-dts"
   },
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "typings": "./dist/typings/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.js"
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/index.mjs"
     }
   },
   "files": [
     "dist"
   ],
   "sideEffects": false,
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
   "dependencies": {
-    "@sngn/logger": "*",
-    "chalk": "^5.2.0",
-    "filesize": "^10.0.6",
-    "svelte-dts": "^0.3.7"
+    "@sngn/get-tsconfig-from-path": "workspace:*",
+    "import-meta-resolve": "3.1.1",
+    "svelte2tsx": "^0.6.27"
   },
   "devDependencies": {
     "esbuild": "^0.19.10",
     "esbuild-node-externals": "^1.12.0",
     "esbuild-plugin-d.ts": "^1.2.2",
-    "shx": "^0.3.4",
-    "typescript": "^5.3.3"
+    "shx": "^0.3.4"
   },
   "scripts": {
     "build": "node esbuild.js",
-    "cbuild": "npm run clean && npm run build",
+    "build:nx": "nx run @sngn/esbuild-svelte-dts:build",
+    "build:nx:sc": "nx run --skip-nx-cache @sngn/esbuild-svelte-dts:build",
+    "cbuild": "pnpm run clean && pnpm run build",
+    "cbuild:nx": "pnpm run clean && pnpm run build:nx",
     "clean": "shx rm -rf ./dist/*",
     "test": "echo \"Error: no test specified\" && exit 1"
   }

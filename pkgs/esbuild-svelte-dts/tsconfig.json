@@ -2,13 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "declaration": true,
-    "declarationDir": "./dist/typings",
+    "declarationDir": "./dist/types",
     "emitDeclarationOnly": true,
     "outDir": "./dist",
-    "paths": {
-      "$src/*": ["./src/*"],
-      "$src": ["./src"]
-    },
     "rootDir": "./src"
   },
   "extends": "../../tsconfig.json",
@@ -16,3 +12,4 @@
     "src/**/*.ts"
   ]
 }
+
