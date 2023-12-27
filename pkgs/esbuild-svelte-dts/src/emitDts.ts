@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 import {default as getTsconfigFromPath} from "@sngn/get-tsconfig-from-path";
 import {svelte2tsx} from "svelte2tsx";
 import {default as ts} from "typescript";
@@ -19,37 +21,39 @@ function isSvelteFilepath(filePath :string) {
   return filePath.endsWith (".svelte");
 }
 
-async function createTsCompilerHost(params :Params, options :CompilerOptions, setParentNodes ?:boolean) {
+function createTsCompilerHost(
+    params :Params,
+    options :CompilerOptions,
+    setParentNodes ?:boolean
+) {
   const { svelteShimsPath } = params;
 
-  const host = ts.createCompilerHost (options, setParentNodes);
   const noSvelteComponentTyped = svelteShimsPath
-    .replace(/\\/g, '/')
-    .endsWith('svelte2tsx/svelte-shims-v4.d.ts');
-  const sveltefiles = new Map();
+    .replace (/\\/g, "/")
+    .endsWith ("svelte2tsx/svelte-shims-v4.d.ts");
+  const sveltefiles = new Map ();
 
   const svelteSys :ts.System = {
     ...ts.sys,
     readFile(path, encoding = "utf-8") {
       if (isSvelteFilepath (path)) {
 
-        if (sveltefiles.has(path)) {
-          const content = sveltefiles.get(path);
+        if (sveltefiles.has (path)) {
+          const content = sveltefiles.get (path);
 
           return content;
         } else {
-          const code = ts.sys.readFile(path, 'utf-8')!;
-          const isTsFile = /<script\s+[^>]*?lang=('|")(ts|typescript)('|")/.test(code);
-
-          const svelte2tsxOutput = svelte2tsx(code, {
-              filename: path,
-              isTsFile,
-              mode: "dts",
-              noSvelteComponentTyped,
+          const code = ts.sys.readFile (path, "utf-8")!;
+          const isTsFile = /<script\s+[^>]*?lang=('|")(ts|typescript)('|")/.test (code);
+          const svelte2tsxOutput = svelte2tsx (code, {
+            filename: path,
+            isTsFile,
+            mode: "dts",
+            noSvelteComponentTyped,
           });
           const transformed = svelte2tsxOutput.code;
 
-          sveltefiles.set(path, transformed);
+          sveltefiles.set (path, transformed);
 
           return transformed;
         }
@@ -63,6 +67,35 @@ async function createTsCompilerHost(params :Params, options :CompilerOptions, se
       return ts.sys.readDirectory (path, extensionsWithSvelte, exclude, include, depth);
     },
   };
+
+  function resolveModuleName(
+      name :string,
+      containingFile :string,
+      compilerOptions :CompilerOptions,
+  ) {
+    // Delegate to the TS resolver first.
+    // If that does not bring up anything, try the Svelte Module loader
+    // which is able to deal with .svelte files.
+    const tsResolvedModule = ts.resolveModuleName (
+        name,
+        containingFile,
+        compilerOptions,
+        ts.sys
+    ).resolvedModule;
+
+    const rv = tsResolvedModule
+      ? tsResolvedModule
+      : ts.resolveModuleName (
+          name,
+          containingFile,
+          compilerOptions,
+          svelteSys
+      ).resolvedModule;
+
+    return rv;
+  }
+
+  const host = ts.createCompilerHost (options, setParentNodes);
 
   host.readDirectory = svelteSys.readDirectory;
   host.readFile = svelteSys.readFile;
@@ -94,39 +127,17 @@ async function createTsCompilerHost(params :Params, options :CompilerOptions, se
     });
   };
 
-  function resolveModuleName(name :string, containingFile :string, compilerOptions :any) {
-    // Delegate to the TS resolver first.
-    // If that does not bring up anything, try the Svelte Module loader
-    // which is able to deal with .svelte files.
-    const tsResolvedModule = ts.resolveModuleName (
-        name,
-        containingFile,
-        compilerOptions,
-        ts.sys
-    ).resolvedModule;
-
-    const rv = tsResolvedModule
-      ? tsResolvedModule
-      : ts.resolveModuleName (
-          name,
-          containingFile,
-          compilerOptions,
-          svelteSys
-      ).resolvedModule;
-
-    return rv;
-  }
-
   return host;
 }
 
-function prepareTsconfig(params :Params) {
+function prepareTsconfig(params :Params) :ReturnType<typeof getTsconfigFromPath> {
   const {
     inputFiles,
   } = params;
 
   const initialpath = inputFiles.find (isSvelteFilepath) ?? process.cwd ();
   const existingOptions :CompilerOptions = {
+    allowNonTsExtensions: true, // necessary for ts *.svelte file acceptance
     declaration: true, // Needed for d.ts file generation
     emitDeclarationOnly: true, // We only want d.ts file generation
     noEmit: false, // Set to true in case of jsconfig, force false, else nothing is emitted
@@ -158,20 +169,21 @@ function prepareTsconfig(params :Params) {
   return tsconfig;
 }
 
-async function main(params :Params) {
+function main(params :Params) :void {
   const {
     inputFiles,
     svelteShimsPath,
   } = params;
 
+  const rootNames = [svelteShimsPath, ...inputFiles];
   const tsconfig = prepareTsconfig (params);
   const pcl = tsconfig.pcl!;
+  const host = createTsCompilerHost (params, pcl.options);
 
-  const host = await createTsCompilerHost (params, pcl.options);
   const program = ts.createProgram ({
     host,
     options: pcl.options,
-    rootNames: [svelteShimsPath, ...inputFiles],
+    rootNames,
   });
 
   program.emit ();

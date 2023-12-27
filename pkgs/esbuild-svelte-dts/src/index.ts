@@ -16,7 +16,7 @@ const pluginName = "esbuild-svelte-dts";
 const svelteShimsPathPart = "svelte2tsx/svelte-shims-v4.d.ts";
 
 const logprefix = pluginName;
-const svelteShimsPath = moduleResolve(svelteShimsPathPart, import.meta.url, true);
+const svelteShimsPath = moduleResolve (svelteShimsPathPart, import.meta.url, true);
 
 export function plugin (/*params :Params = {}*/) :Plugin {
 

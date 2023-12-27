@@ -6,6 +6,12 @@ import {moduleResolve as moduleResolveOrig} from "import-meta-resolve";
 
 const filePrefix = "file://";
 
+/**
+ * Resolves an import path relative to the importing file
+ * @param {string} source - import path/expression
+ * @param {(string|URL)} importer - importing file
+ * @returns {(undefined|string)} - result of resolution effort
+ */
 export function moduleResolve (
     source :string,
     importer :string|URL,
