@@ -13,6 +13,7 @@ import type {WatchOptions} from "typescript";
 
 type Params = {
   basepath ?:string;
+  outputMode ?:"configFilePath"|"readConfigFile"|"pcl";
   processReadConfigFileOutput ?:(output :ReturnType<typeof ts.readConfigFile>) => ReturnType<typeof ts.readConfigFile>;
 
   // ### findConfigFile options
@@ -33,7 +34,7 @@ type Params = {
 
 // ### ### ###
 
-const noop = <T = any>(v :T) :T => v;
+const id = <T = any>(v :T) :T => v;
 
 export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => {
   const {
@@ -44,51 +45,71 @@ export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => 
     extendedConfigCache,
     extraFileExtensions,
     fileExists = ts.sys.fileExists,
+    outputMode = "pcl",
     parseConfigHost = ts.sys,
     processReadConfigFileOutput,
     readFile = ts.sys.readFile,
     resolutionStack,
   } = params ?? {};
 
-  const configFileName = ts.findConfigFile (searchinitPath, fileExists, configName); /* eslint-disable-line @typescript-eslint/unbound-method */
+  const configFilePath = ts.findConfigFile (searchinitPath, fileExists, configName); /* eslint-disable-line @typescript-eslint/unbound-method */
 
-  if (!configFileName) {
-    throw new Error (`getTsConfigFromPath Could not find configuration file for typescript, searching from ${searchinitPath}`);
+  let rv;
+
+  if (outputMode === "configFilePath") {
+    rv = {
+      configFilePath,
+      searchinitPath,
+    };
+  } else {
+    if (!configFilePath) {
+      throw new Error (`getTsConfigFromPath Could not find configuration file for typescript, searching from ${searchinitPath}`);
+    }
+
+    const readConfigFileOutput = ts.readConfigFile (configFilePath, readFile);
+    const {
+      config : configFileContent,
+      error : configFileError,
+    } = (processReadConfigFileOutput ?? id)(readConfigFileOutput); /* eslint-disable-line @typescript-eslint/unbound-method */
+
+    if (outputMode === "readConfigFile") {
+      rv = {
+        configFileContent,
+        configFileError,
+        configFilePath,
+        readConfigFileOutput,
+        searchinitPath,
+      };
+    } else {
+      if (configFileError) {
+        throw new Error ("Malformed tsconfig\n" + JSON.stringify (configFileError, null, 2));
+      }
+
+      const basepath = pbasepath ?? dirname (configFilePath);
+
+      const pcl = ts.parseJsonConfigFileContent (
+        configFileContent,
+        parseConfigHost,
+        basepath,
+        existingOptions,
+        configFilePath,
+        resolutionStack,
+        extraFileExtensions,
+        extendedConfigCache,
+        existingWatchOptions,
+      );
+
+      rv = {
+        basepath,
+        configFileContent,
+        configFileError,
+        configFilePath,
+        pcl,
+        readConfigFileOutput,
+        searchinitPath,
+      };
+    }
   }
-
-  const readConfigFileOutput = ts.readConfigFile (configFileName, readFile);
-  const {
-    config : configFileContent,
-    error : configFileError,
-  } = (processReadConfigFileOutput ?? noop)(readConfigFileOutput); /* eslint-disable-line @typescript-eslint/unbound-method */
-
-  if (configFileError) {
-    throw new Error('Malformed tsconfig\n' + JSON.stringify(configFileError, null, 2));
-  }
-
-  const basepath = pbasepath ?? dirname(configFileName);
-
-  const pcl = ts.parseJsonConfigFileContent (
-    configFileContent,
-    parseConfigHost,
-    basepath,
-    existingOptions,
-    configFileName,
-    resolutionStack,
-    extraFileExtensions,
-    extendedConfigCache,
-    existingWatchOptions,
-  );
-
-  const rv = {
-    basepath,
-    configFileContent,
-    configFileError,
-    configFileName,
-    pcl,
-    readConfigFileOutput,
-    searchinitPath,
-  };
 
   return rv;
 };
