@@ -25,6 +25,7 @@
     "dist"
   ],
   "sideEffects": false,
+  "peerDependencies": {},
   "dependencies": {
     "chalk-template": "^1.0.0"
   },
@@ -37,10 +38,10 @@
   },
   "scripts": {
     "build": "node esbuild.js",
-    "build:nx": "nx run @sngn/logger:build",
-    "build:nx:sc": "nx run --skip-nx-cache @sngn/logger:build",
+    "build-nx": "nx run @sngn/logger:build",
+    "build-nx-sc": "nx run --skip-nx-cache --verbose @sngn/logger:build",
     "cbuild": "pnpm run clean && pnpm run build",
-    "cbuild:nx": "pnpm run clean && pnpm run build:nx",
+    "cbuild-nx": "pnpm run clean && pnpm run build-nx",
     "clean": "shx rm -rf ./dist/*",
     "test": "node test.js"
   }

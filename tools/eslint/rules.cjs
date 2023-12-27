@@ -135,8 +135,8 @@ const rules = {
       "typeof": true,
     },
   ],
-  //"no-undefined": "off",
-  "no-undefined": "warn",
+  "no-undefined": "off",
+  //"no-undefined": "warn",
   "no-use-before-define": "error",
   /* ### Node.js and CommonJS ### */
   /* ### Stylistic Issues ### */

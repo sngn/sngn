@@ -42,10 +42,10 @@
   },
   "scripts": {
     "build": "node esbuild.js",
-    "build:nx": "nx run @sngn/esbuild-svelte-dts:build",
-    "build:nx:sc": "nx run --skip-nx-cache @sngn/esbuild-svelte-dts:build",
+    "build-nx": "nx run @sngn/esbuild-svelte-dts:build",
+    "build-nx-sc": "nx run --skip-nx-cache --verbose @sngn/esbuild-svelte-dts:build",
     "cbuild": "pnpm run clean && pnpm run build",
-    "cbuild:nx": "pnpm run clean && pnpm run build:nx",
+    "cbuild-nx": "pnpm run clean && pnpm run build-nx",
     "clean": "shx rm -rf ./dist/*",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
