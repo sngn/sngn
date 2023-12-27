@@ -1,6 +1,7 @@
 {
   "private": true,
-  "description": "sngn monorepo",
+  "name": "@sngn/public",
+  "description": "sngn public monorepo",
   "author": "Maximilian Stejskal",
   "repository": "github:sngn/public",
   "engines": {
@@ -22,7 +23,11 @@
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   },
+  "nx": {},
   "scripts": {
+    "build:all": "nx run-many -t build",
+    "build:all:affected": "nx affected run-many -t build",
+    "build:all:sc": "nx --skip-nx-cache run-many -t build",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
