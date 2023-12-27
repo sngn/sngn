@@ -64,6 +64,7 @@ async function createTsCompilerHost(params :Params, options :CompilerOptions, se
     },
   };
 
+  host.readDirectory = svelteSys.readDirectory;
   host.readFile = svelteSys.readFile;
   host.resolveModuleNameLiterals = (
       moduleLiterals,
