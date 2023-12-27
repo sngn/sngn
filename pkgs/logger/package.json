@@ -13,11 +13,9 @@
     "directory": "pkgs/logger"
   },
   "type": "module",
-  "main": "./dist/cjs/index.cjs",
-  "module": "./dist/esm/index.mjs",
-  "typings": "./dist/typings",
   "exports": {
     ".": {
+      "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.mjs",
       "require": "./dist/cjs/index.cjs",
       "default": "./dist/esm/index.mjs"
@@ -39,8 +37,11 @@
   },
   "scripts": {
     "build": "node esbuild.js",
-    "cbuild": "npm run clean && npm run build",
-    "clean": "shx rm -f /tmp/@sngn/logger/.esbuild/.tsbuildinfo; shx rm -rf ./dist/*",
+    "build:nx": "nx run @sngn/logger:build",
+    "build:nx:sc": "nx run --skip-nx-cache @sngn/logger:build",
+    "cbuild": "pnpm run clean && pnpm run build",
+    "cbuild:nx": "pnpm run clean && pnpm run build:nx",
+    "clean": "shx rm -rf ./dist/*",
     "test": "node test.js"
   }
 }

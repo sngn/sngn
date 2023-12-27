@@ -16,8 +16,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/typings/index.d.ts",
-      "default": "./dist/esm/index.mjs"
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/index.mjs"
     }
   },
   "files": [
@@ -35,7 +35,10 @@
   },
   "scripts": {
     "build": "node esbuild.js",
-    "cbuild": "npm run clean && npm run build",
+    "build:nx": "nx run @sngn/get-tsconfig-from-path:build",
+    "build:nx:sc": "nx run --skip-nx-cache @sngn/get-tsconfig-from-path:build",
+    "cbuild": "pnpm run clean && pnpm run build",
+    "cbuild:nx": "pnpm run clean && pnpm run build:nx",
     "clean": "shx rm -rf ./dist/*",
     "test": "node test.js"
   }

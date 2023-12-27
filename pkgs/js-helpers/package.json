@@ -14,9 +14,6 @@
     "directory": "pkgs/js-helpers"
   },
   "type": "module",
-  "main": "./dist/cjs/index.cjs",
-  "module": "./dist/esm/index.mjs",
-  "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
@@ -45,8 +42,11 @@
   },
   "scripts": {
     "build": "node esbuild.js",
+    "build:nx": "nx run @sngn/js-helpers:build",
+    "build:nx:sc": "nx run --skip-nx-cache @sngn/js-helpers:build",
     "cbuild": "pnpm run clean && pnpm run build",
-    "clean": "shx rm -f /tmp/@sngn/js-helpers/.esbuild/.tsbuildinfo; shx rm -rf ./dist/*",
+    "cbuild:nx": "pnpm run clean && pnpm run build:nx",
+    "clean": "shx rm -rf ./dist/*",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
