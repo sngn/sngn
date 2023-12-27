@@ -25,9 +25,9 @@
   },
   "nx": {},
   "scripts": {
-    "build:all": "nx run-many -t build",
-    "build:all:affected": "nx affected run-many -t build",
-    "build:all:sc": "nx --skip-nx-cache run-many -t build",
+    "build-all": "nx run-many -t build",
+    "build-all-affected": "nx affected run-many -t build",
+    "build-all-sc": "nx run-many --skip-nx-cache -t build",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
