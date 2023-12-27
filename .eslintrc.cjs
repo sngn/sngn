@@ -23,7 +23,9 @@ const parserOptions = {
   },
   extraFileExtensions: [".svelte"],
   project: [
+    "./jsconfig.json",
     "./tsconfig.json",
+    "./pkgs/*/jsconfig.json",
     "./pkgs/*/tsconfig.json",
   ],
   sourceType: "module",
@@ -34,6 +36,7 @@ module.exports = {
   env,
   extends: [
     "eslint:recommended",
+    "plugin:jsdoc/recommended",
   ],
   globals: {
   },
@@ -99,6 +102,7 @@ module.exports = {
   parserOptions,
   plugins: [
     "@typescript-eslint",
+    "jsdoc",
   ],
   root: true,
   rules,
