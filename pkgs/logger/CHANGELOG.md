@@ -1,5 +1,14 @@
 # @sngn/logger
 
+## 0.2.3
+
+### Patch Changes
+
+- fb5be6f: changed typings output path from typings to types
+- fb5be6f: Added nx tasks to package.json files
+- fb5be6f: Included \*.js files in tsconfig.json files
+- 317b7c7: changed build target to from node16 to node18
+
 ## 0.2.2
 
 ### Patch Changes

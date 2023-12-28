@@ -1,6 +1,6 @@
 {
   "name": "@sngn/get-tsconfig-from-path",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Finds tsconfig.json given a path and returns contents and additional info",
   "keywords": [
     "typescript",

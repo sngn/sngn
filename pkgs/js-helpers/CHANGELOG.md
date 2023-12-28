@@ -1,5 +1,13 @@
 # @sngn/js-helpers
 
+## 0.2.6
+
+### Patch Changes
+
+- fb5be6f: changed typings output path from typings to types
+- fb5be6f: Added nx tasks to package.json files
+- fb5be6f: Included \*.js files in tsconfig.json files
+
 ## 0.2.5
 
 ### Patch Changes
