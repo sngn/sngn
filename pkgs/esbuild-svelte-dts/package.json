@@ -1,6 +1,6 @@
 {
   "name": "@sngn/esbuild-svelte-dts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "esbuild plugin to create typescript declaration files for svelte components",
   "keywords": [
     "esbuild",

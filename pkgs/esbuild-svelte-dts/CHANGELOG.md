@@ -1,5 +1,12 @@
 # @sngn/esbuild-svelte-dts
 
+## 0.0.2
+
+### Patch Changes
+
+- c0ec904: Added plugin option 'filter'
+- c0ec904: Expanded readme
+
 ## 0.0.1
 
 ### Patch Changes
