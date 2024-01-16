@@ -15,12 +15,22 @@ type Params = {
 
 // ### ### ###
 
-const logprefix = "emitDts.ts";
+//const logprefix = "emitDts.ts";
 
-function isSvelteFilepath(filePath :string) {
+/**
+ * @param {string} filePath - string representing a path to a file
+ * @returns {boolean} whether or not supplied argument ends with ".svelte"
+ */
+function isSvelteFilepath(filePath :string) :boolean {
   return filePath.endsWith (".svelte");
 }
 
+/**
+ * @param {Params} params - TODO
+ * @param {CompilerOptions} options - TODO
+ * @param {boolean=} setParentNodes - TODO
+ * @returns a CompilerHost object, equipped to compile .svelte files
+ */
 function createTsCompilerHost(
     params :Params,
     options :CompilerOptions,
@@ -35,6 +45,11 @@ function createTsCompilerHost(
 
   const svelteSys :ts.System = {
     ...ts.sys,
+    readDirectory(path, extensions, exclude, include, depth) {
+      const extensionsWithSvelte = (extensions || []).concat (".svelte");
+
+      return ts.sys.readDirectory (path, extensionsWithSvelte, exclude, include, depth);
+    },
     readFile(path, encoding = "utf-8") {
       if (isSvelteFilepath (path)) {
 
@@ -61,13 +76,14 @@ function createTsCompilerHost(
         return ts.sys.readFile (path, encoding);
       }
     },
-    readDirectory(path, extensions, exclude, include, depth) {
-      const extensionsWithSvelte = (extensions || []).concat (".svelte");
-
-      return ts.sys.readDirectory (path, extensionsWithSvelte, exclude, include, depth);
-    },
   };
 
+  /**
+   * @param name - TODO
+   * @param containingFile - TODO
+   * @param compilerOptions - TODO
+   * @returns TODO
+   */
   function resolveModuleName(
       name :string,
       containingFile :string,
@@ -97,8 +113,8 @@ function createTsCompilerHost(
 
   const host = ts.createCompilerHost (options, setParentNodes);
 
-  host.readDirectory = svelteSys.readDirectory;
-  host.readFile = svelteSys.readFile;
+  host.readDirectory = svelteSys.readDirectory; /* eslint-disable-line @typescript-eslint/unbound-method */
+  host.readFile = svelteSys.readFile; /* eslint-disable-line @typescript-eslint/unbound-method */
   host.resolveModuleNameLiterals = (
       moduleLiterals,
       containingFile,
@@ -130,6 +146,10 @@ function createTsCompilerHost(
   return host;
 }
 
+/**
+ * @param {Params} params - TODO
+ * @returns TODO
+ */
 function prepareTsconfig(params :Params) :ReturnType<typeof getTsconfigFromPath> {
   const {
     inputFiles,
@@ -169,6 +189,10 @@ function prepareTsconfig(params :Params) :ReturnType<typeof getTsconfigFromPath>
   return tsconfig;
 }
 
+/**
+ *
+ * @param params - TODO
+ */
 function main(params :Params) :void {
   const {
     inputFiles,

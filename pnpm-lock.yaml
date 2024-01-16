@@ -11,6 +11,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.27.1
         version: 2.27.1
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       '@types/node':
         specifier: ^20.10.5
         version: 20.10.5
@@ -29,9 +32,9 @@ importers:
       eslint-plugin-svelte:
         specifier: ^2.35.1
         version: 2.35.1(eslint@8.56.0)(svelte@4.2.8)
-      eslint-plugin-svelte3:
-        specifier: ^4.0.0
-        version: 4.0.0(eslint@8.56.0)(svelte@4.2.8)
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       nx:
         specifier: 17.2.7
         version: 17.2.7
@@ -811,6 +814,10 @@ packages:
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  /@types/js-yaml@4.0.9:
+    resolution: {integrity: sha512-k4MGaQl5TGo/iipqb2UDG2UwjXziSWkh0uysQelTlJpX1qGlpUZYm8PnO4DxG1qBomtJUdYJ6qR6xdIah10JLg==}
+    dev: true
 
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -1638,16 +1645,6 @@ packages:
       spdx-expression-parse: 4.0.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /eslint-plugin-svelte3@4.0.0(eslint@8.56.0)(svelte@4.2.8):
-    resolution: {integrity: sha512-OIx9lgaNzD02+MDFNLw0GEUbuovNcglg+wnd/UY0fbZmlQSz7GlQiQ1f+yX0XvC07XPcDOnFcichqI3xCwp71g==}
-    peerDependencies:
-      eslint: '>=8.0.0'
-      svelte: ^3.2.0
-    dependencies:
-      eslint: 8.56.0
-      svelte: 4.2.8
     dev: true
 
   /eslint-plugin-svelte@2.35.1(eslint@8.56.0)(svelte@4.2.8):

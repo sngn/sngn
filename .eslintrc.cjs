@@ -15,7 +15,7 @@ const rulesTs = require (path.join (configPath, "rulesTs.cjs"));
 // ### ### ###
 
 const env = {
-  es2021: true,
+  es2022: true,
 };
 
 const parserOptions = {

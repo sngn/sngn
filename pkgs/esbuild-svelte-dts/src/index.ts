@@ -8,7 +8,13 @@ import {moduleResolve} from "./moduleResolve.js";
 import type {Plugin} from "esbuild";
 import type {PluginBuild} from "esbuild";
 
-//type Params = {};
+type Params = {
+  /**
+   * files that match this filter will be processed by the plugin
+   * @default /(\.svelte)$/
+   */
+  filter ?:RegExp;
+};
 
 // ### ### ###
 
@@ -16,9 +22,16 @@ const pluginName = "esbuild-svelte-dts";
 const svelteShimsPathPart = "svelte2tsx/svelte-shims-v4.d.ts";
 
 const logprefix = pluginName;
-const svelteShimsPath = moduleResolve (svelteShimsPathPart, import.meta.url, true);
+const svelteShimsPath = moduleResolve (svelteShimsPathPart, import.meta.url);
 
-export function plugin (/*params :Params = {}*/) :Plugin {
+/**
+ * @param {Params=} params - options for the plugin
+ * @returns {Plugin} an esbuild plugin
+ */
+export function plugin (params :Params = {}) :Plugin {
+  const {
+    filter = /(\.svelte)$/,
+  } = params;
 
   if (!svelteShimsPath) {
     throw new Error (`${logprefix} could not find svelteShimsPath for ${svelteShimsPathPart}`);
@@ -29,11 +42,7 @@ export function plugin (/*params :Params = {}*/) :Plugin {
     setup (build :PluginBuild) {
       const inputFiles :string[] = [];
 
-      build.onLoad ({ filter: /(\.svelte)$/ }, (args) => {
-        const {
-          path,
-        } = args;
-
+      build.onLoad ({ filter }, (args) => {
         inputFiles.push (args.path);
 
         return void 0;
