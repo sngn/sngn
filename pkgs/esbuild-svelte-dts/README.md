@@ -8,7 +8,7 @@ I had a hard time finding a plugin that wasn't outdated or worked at all.
 
 ## How
 
-I looked at how `svelte-kit` was doing things and so this here is a rough copy of their solution, which at the heart uses `svelte2tsx` and adds some overhead to trick tsc into accepting svelte files. The problem with this trick (renaming `.svelte` files to `.svelte.ts`) is, that the resolution process in my editor didn't work (because wrong filenames). So still no types.
+I looked at how `svelte-kit` was doing things and so this here is a rough copy of their solution, which at the heart uses `svelte2tsx` and adds some overhead to trick `tsc` into accepting svelte files. The problem with this trick (renaming `.svelte` files to `.svelte.ts`) is, that the resolution process in my editor didn't work (because wrong filenames). So still no types.
 
 I made it work without the extra complexity and put it into plugin form. Seems to work. Works for me at least.
 
