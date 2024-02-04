@@ -41,8 +41,7 @@ const dependencyTypes_to_mutate = [
  * @param {string} location - path that contains a package.json file
  * @returns {ReturnType<typeof JSON.parse>} - parsed content of {@link location}/package.json
  */
-const getPackageFileContentAt = (location) =>
-  JSON.parse (readFileSync (`${location}/package.json`, "utf-8"));
+const getPackageFileContentAt = location => JSON.parse (readFileSync (`${location}/package.json`, "utf-8"));
 
 /**
  * Replaces versions of workspace packages that are used as dependencies in other packages via something like 'workspace:\*'
@@ -79,7 +78,7 @@ function replaceVersions (workspaceVersionMap) {
     writeFileSync (
       `${location}/package.json`,
       data,
-      "utf-8"
+      "utf-8",
     );
   });
 }
@@ -92,18 +91,18 @@ function replaceVersions (workspaceVersionMap) {
 function generateWorkspaceVersionsMap (workspaces) {
   /** @type {WorkspaceVersionMap} */
   const workspaceVersionMap = new Map (
-    workspaces.packages?.map ((location) => {
-      const packagejson = /** @type {PackageFile} */ getPackageFileContentAt (location);
+      workspaces.packages?.map ((location) => {
+        const packagejson = /** @type {PackageFile} */ getPackageFileContentAt (location);
 
-      if (!packagejson.version) {
-        throw new Error (`package.json for ${location} does not contain a member "version"`);
-      }
+        if (!packagejson.version) {
+          throw new Error (`package.json for ${location} does not contain a member "version"`);
+        }
 
-      const key = packagejson.name ?? basename (location);
-      const value = { location, version: packagejson.version };
+        const key = packagejson.name ?? basename (location);
+        const value = { location, version: packagejson.version };
 
-      return [ key, value ];
-    })
+        return [key, value];
+      }),
   );
 
   return workspaceVersionMap;
@@ -122,7 +121,8 @@ function generateWorkspacesDefinitionsPnpm (workspaceConfigPath) {
     const pnpmWorkspaceConfig = readFileSync (workspaceConfigPath, "utf-8");
 
     content = /** @type {PnpmWorkspacesConfigContent} */ yaml.load (pnpmWorkspaceConfig);
-  } catch (cause) {
+  }
+  catch (cause) {
     const error = new Error (`Could not read workspaces configuration file '${workspaceConfigPath}'`, { cause });
     console.error (error);
 
@@ -140,7 +140,8 @@ function generateWorkspacesDefinitionsPnpm (workspaceConfigPath) {
 function generateWorkspacesDefinitions (configPath) {
   if (configPath.includes (workspaceConfigNamePnpm)) {
     return generateWorkspacesDefinitionsPnpm (configPath);
-  } else {
+  }
+  else {
     return {};
   }
 }
