@@ -1,12 +1,12 @@
 /* eslint-env node */
 
-import {default as getTsconfigFromPath} from "@sngn/get-tsconfig-from-path";
-import {svelte2tsx} from "svelte2tsx";
-import {default as ts} from "typescript";
+import { default as getTsconfigFromPath } from "@sngn/get-tsconfig-from-path";
+import { svelte2tsx } from "svelte2tsx";
+import { default as ts } from "typescript";
 
 // ### Types
 /* eslint-disable-next-line sort-imports */
-import type {CompilerOptions} from "typescript";
+import type { CompilerOptions } from "typescript";
 
 type Params = {
   inputFiles :string[];
@@ -34,7 +34,7 @@ function isSvelteFilepath(filePath :string) :boolean {
 function createTsCompilerHost(
     params :Params,
     options :CompilerOptions,
-    setParentNodes ?:boolean
+    setParentNodes ?:boolean,
 ) {
   const { svelteShimsPath } = params;
 
@@ -52,12 +52,12 @@ function createTsCompilerHost(
     },
     readFile(path, encoding = "utf-8") {
       if (isSvelteFilepath (path)) {
-
         if (sveltefiles.has (path)) {
           const content = sveltefiles.get (path);
 
           return content;
-        } else {
+        }
+        else {
           const code = ts.sys.readFile (path, "utf-8")!;
           const isTsFile = /<script\s+[^>]*?lang=('|")(ts|typescript)('|")/.test (code);
           const svelte2tsxOutput = svelte2tsx (code, {
@@ -72,7 +72,8 @@ function createTsCompilerHost(
 
           return transformed;
         }
-      } else {
+      }
+      else {
         return ts.sys.readFile (path, encoding);
       }
     },
@@ -96,7 +97,7 @@ function createTsCompilerHost(
         name,
         containingFile,
         compilerOptions,
-        ts.sys
+        ts.sys,
     ).resolvedModule;
 
     const rv = tsResolvedModule
@@ -105,7 +106,7 @@ function createTsCompilerHost(
           name,
           containingFile,
           compilerOptions,
-          svelteSys
+          svelteSys,
       ).resolvedModule;
 
     return rv;
@@ -119,14 +120,14 @@ function createTsCompilerHost(
       moduleLiterals,
       containingFile,
       _redirectedReference,
-      compilerOptions
+      compilerOptions,
   ) => {
     return moduleLiterals.map ((moduleLiteral) => {
       return {
         resolvedModule: resolveModuleName (
             moduleLiteral.text,
             containingFile,
-            compilerOptions
+            compilerOptions,
         ),
       };
     });
@@ -136,7 +137,7 @@ function createTsCompilerHost(
       containingFile,
       _reusedNames,
       _redirectedReference,
-      compilerOptions
+      compilerOptions,
   ) => {
     return moduleNames.map ((moduleName) => {
       return resolveModuleName (moduleName, containingFile, compilerOptions);
@@ -179,9 +180,9 @@ function prepareTsconfig(params :Params) :ReturnType<typeof getTsconfigFromPath>
     pcl.options.moduleResolution === undefined
     || pcl.options.moduleResolution === ts.ModuleResolutionKind.Classic
   ) {
-    const moduleResolutionDefault =
+    const moduleResolutionDefault
       // NodeJS: up to 4.9, Node10: since 5.0
-      (ts.ModuleResolutionKind as any).NodeJs ?? ts.ModuleResolutionKind.Node10; // Classic if not set, which gives wrong results
+      = (ts.ModuleResolutionKind as any).NodeJs ?? ts.ModuleResolutionKind.Node10; // Classic if not set, which gives wrong results
 
     pcl.options.moduleResolution = moduleResolutionDefault;
   }

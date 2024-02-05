@@ -1,12 +1,12 @@
 /* eslint-env node */
 
-import {default as emitDts} from "./emitDts.js";
-import {moduleResolve} from "./moduleResolve.js";
+import { default as emitDts } from "./emitDts.js";
+import { moduleResolve } from "./moduleResolve.js";
 
 // ### Types
 /* eslint-disable-next-line sort-imports */
-import type {Plugin} from "esbuild";
-import type {PluginBuild} from "esbuild";
+import type { Plugin } from "esbuild";
+import type { PluginBuild } from "esbuild";
 
 type Params = {
   /**
