@@ -1,15 +1,15 @@
 /* eslint-env node */
 /* global ProxyHandler */
 
-import {logFunctions as defaultLogFunctions} from "./defaultLogLevels";
-import {logLevels as defaultLogLevels} from "./defaultLogLevels";
+import { logFunctions as defaultLogFunctions } from "./defaultLogLevels";
+import { logLevels as defaultLogLevels } from "./defaultLogLevels";
 
 // ### Types
 /* eslint-disable-next-line sort-imports */
-import type {LogFunction} from "./shared";
-import type {LogLevel} from "./defaultLogLevels";
+import type { LogFunction } from "./shared";
+import type { LogLevel } from "./defaultLogLevels";
 
-export type {LogFunction};
+export type { LogFunction };
 export * as defaults from "./defaultLogLevels";
 
 export interface Options<TLogLevel extends string> {
@@ -20,13 +20,13 @@ export interface Options<TLogLevel extends string> {
 interface LoggerBase<TLogLevel extends string> {
   hasLevel :(lvl :any) => lvl is TLogLevel;
   levels :TLogLevel[]; // active levels
-  levelsHas :(lvl :string|TLogLevel) => boolean; // checks if lvl is in active levels
+  levelsHas :(lvl :string | TLogLevel) => boolean; // checks if lvl is in active levels
 }
-export type LogFunctions<TLogLevel extends string> = Partial<Record<TLogLevel, LogFunction>>; /* eslint-disable-line max-len */
+export type LogFunctions<TLogLevel extends string> = Partial<Record<TLogLevel, LogFunction>>;
 type IsLevelProps<TLogLevel extends string> = Partial<{ [L in TLogLevel as `is${Capitalize<L>}`] :boolean; }>;
 export type Logger<TLogLevel extends string>
-= LoggerBase<TLogLevel> & Required<LogFunctions<TLogLevel>> & Required<IsLevelProps<TLogLevel>>; /* eslint-disable-line max-len */
-type LoggerGenerator<TLogLevel extends string = LogLevel> = (lvl ?:TLogLevel) => Logger<TLogLevel>; /* eslint-disable-line max-len */
+= LoggerBase<TLogLevel> & Required<LogFunctions<TLogLevel>> & Required<IsLevelProps<TLogLevel>>;
+type LoggerGenerator<TLogLevel extends string = LogLevel> = (lvl ?:TLogLevel) => Logger<TLogLevel>;
 
 // ### ### ###
 
@@ -34,18 +34,20 @@ const emptyLogFunction = (...args :any[]) => { void args; };
 const isString = (v :any) :v is string => typeof v === "string";
 
 export const getLogLevels
-= <TLogLevel>(logLevels :TLogLevel[]) => (lvl ?:any|TLogLevel) :TLogLevel[] => {
+= <TLogLevel>(logLevels :TLogLevel[]) => (lvl ?:any | TLogLevel) :TLogLevel[] => {
   const index = logLevels.indexOf (String (lvl ?? "") as unknown as TLogLevel);
 
   return logLevels.slice (index);
 };
 
-export const hasLogLevel = <TLogLevel extends string>(logLevels :TLogLevel[]) =>
-  (lvl :any|TLogLevel) :lvl is TLogLevel =>
-    isString (lvl) && logLevels.includes (lvl as unknown as TLogLevel);
+export const hasLogLevel = <TLogLevel extends string>(logLevels :TLogLevel[]) => (lvl :any | TLogLevel) :lvl is TLogLevel => isString (lvl) && logLevels.includes (lvl as unknown as TLogLevel);
 
+/**
+ *
+ * @param options
+ */
 export function createLogger<TLogLevel extends string = LogLevel> (
-    options :Options<TLogLevel> = {}
+    options :Options<TLogLevel> = {},
 ) :LoggerGenerator<TLogLevel> {
   const {
     logFunctions = defaultLogFunctions as LogFunctions<TLogLevel>,
@@ -55,9 +57,13 @@ export function createLogger<TLogLevel extends string = LogLevel> (
   const getLevels = getLogLevels (logLevels);
   const hasLevel = hasLogLevel (logLevels);
 
+  /**
+   *
+   * @param level
+   */
   function logger (level ?:TLogLevel) :Logger<TLogLevel> {
     const levels = getLevels (level);
-    const levelsHas = (lvl :string|TLogLevel) :lvl is TLogLevel => levels.includes (lvl as unknown as TLogLevel); /* eslint-disable-line max-len */
+    const levelsHas = (lvl :string | TLogLevel) :lvl is TLogLevel => levels.includes (lvl as unknown as TLogLevel);
 
     const target :LoggerBase<TLogLevel> = {
       hasLevel,
@@ -67,23 +73,25 @@ export function createLogger<TLogLevel extends string = LogLevel> (
 
     const handler :ProxyHandler<Logger<TLogLevel>> = {
       get: (target, prop, receiver) => {
-        let rv :LogFunction|boolean|ReturnType<
+        let rv :LogFunction | boolean | ReturnType<
           typeof Reflect.get<Logger<TLogLevel>, string>
         >;
 
         if (isString (prop)) {
           if (hasLevel (prop)) {
             rv = levelsHas (prop)
-              ? logFunctions [prop] ?? emptyLogFunction
+              ? logFunctions[prop] ?? emptyLogFunction
               : emptyLogFunction;
-          } else {
+          }
+          else {
             const unprefixed = prop.replace (/^is/, "").toLowerCase ();
 
             rv = hasLevel (unprefixed)
               ? levelsHas (unprefixed)
               : Reflect.get (target, prop, receiver);
           }
-        } else {
+        }
+        else {
           rv = Reflect.get (target, prop, receiver);
         }
 
