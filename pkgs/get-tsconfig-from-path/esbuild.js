@@ -1,8 +1,8 @@
 /* eslint-env node */
 
-import {build} from "esbuild";
-import {dtsPlugin} from "esbuild-plugin-d.ts";
-import {nodeExternalsPlugin} from "esbuild-node-externals";
+import { build } from "esbuild";
+import { dtsPlugin } from "esbuild-plugin-d.ts";
+import { nodeExternalsPlugin } from "esbuild-node-externals";
 
 // ### ### ###
 
