@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "emitDeclarationOnly": true,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "extends": "../../tsconfig.json",
+  "include": [
+    "dist/sort-schema.d.ts",
+    "src/**/*.js",
+    "src/**/*.ts",
+  ],
+}
+

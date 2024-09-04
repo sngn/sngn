@@ -1,0 +1,59 @@
+{
+  "name": "@sngn/eslint-plugin-split-and-sort-imports",
+  "version": "0.1.0",
+  "description": "Autofixes eslint 'sort-imports' rule and splits multiple imports into multiple lines",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "sort-imports"
+  ],
+  "author": "Maximilian Stejskal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sngn/sngn.git",
+    "directory": "pkgs/eslint-plugin-split-and-sort-imports"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": false,
+  "peerDependencies": {
+    "eslint": ">=9.0.0",
+    "json-schema-to-typescript": ">=15.0.0"
+  },
+  "peerDependenciesMeta": {
+    "json-schema-to-typescript": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/eslint": "9.6.1",
+    "@types/estree": "1.0.5",
+    "@typescript-eslint/rule-tester": "8.4.0",
+    "@typescript-eslint/types": "8.4.0",
+    "shx": "0.3.4",
+    "typescript-eslint": "8.4.0"
+  },
+  "scripts": {
+    "build": "pnpm run build:schemadts; pnpm run build:types",
+    "build-nx": "nx run @sngn/eslint-plugin-split-and-sort-imports:build",
+    "build-nx-sc": "nx run --skip-nx-cache --verbose @sngn/eslint-plugin-split-and-sort-imports:build",
+    "build:schemadts": "pnpm run build:schemajson && json2ts --input dist/sort-schema.json --output dist/sort-schema.d.ts",
+    "build:schemajson": "mkdir -p dist; cat src/rules/sort-schema.js | sed -e 's/export const schema = //' -e 's/};/}/' -e 's/^\\s*\\/.*$//' | grep -v '^$' | prettier --parser json > dist/sort-schema.json",
+    "build:types": "tsc --emitDeclarationOnly",
+    "cbuild": "pnpm run clean && pnpm run build",
+    "cbuild-nx": "pnpm run clean && pnpm run build-nx",
+    "clean": "shx rm -rf ./dist/*",
+    "test": "node --import ./tests/ruletester-setup.js --test"
+  }
+}

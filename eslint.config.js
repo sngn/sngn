@@ -8,6 +8,7 @@ import { default as prettierRecommended } from "eslint-plugin-prettier/recommend
 import { default as rules } from "./tools/eslint/rules.js";
 import { default as rulesSvelte } from "./tools/eslint/rulesSvelte.js";
 import { default as rulesTs } from "./tools/eslint/rulesTs.js";
+import { default as splitAndSortImports } from "./pkgs/eslint-plugin-split-and-sort-imports/src/index.js";
 import { default as svelte } from "eslint-plugin-svelte";
 import { default as tseslint } from "typescript-eslint";
 
@@ -23,6 +24,7 @@ export default tseslint.config(
   ...svelte.configs["flat/recommended"], // must come after tseslint.configs.recommendedTypeChecked
   ...svelte.configs["flat/prettier"], // must come after tseslint.configs.recommendedTypeChecked
   prettierRecommended,
+  ...(splitAndSortImports.configs?.recommended ?? {}),
   {
     /* prettier-ignore */
     ignores: [

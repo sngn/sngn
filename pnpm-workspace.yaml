@@ -1,5 +1,6 @@
 packages:
   - "pkgs/esbuild-svelte-dts"
+  - "pkgs/eslint-plugin-split-and-sort-imports"
   - "pkgs/get-tsconfig-from-path"
   - "pkgs/js-helpers"
   - "pkgs/logger"
