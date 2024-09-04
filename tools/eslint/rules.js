@@ -19,12 +19,11 @@ const rules = {
   "curly": ["error", "all"],
   "consistent-return": ["warn"],
   "default-case": ["error"],
+  "dot-location": ["warn", "property"],
   "dot-notation": "warn",
   "eqeqeq": ["warn", "smart"],
   "no-implicit-coercion": [
-    //"off",
     "warn",
-    //"error",
     {
       boolean: true,
       number: true,
@@ -46,10 +45,17 @@ const rules = {
   "no-useless-call": "error",
   "no-useless-return": "warn",
   "require-await": "error",
+  "wrap-iife": ["error", "inside"],
   /* ### Strict Mode ### */
   "strict": ["warn", "safe"],
   /* ### Variables ### */
-  "no-undef": ["error"],
+  "no-undef": [
+    "error",
+    {
+      typeof: true,
+    },
+  ],
+  "no-undefined": "off",
   "no-use-before-define": "error",
   /* ### Node.js and CommonJS ### */
   /* ### Stylistic Issues ### */
@@ -67,6 +73,8 @@ const rules = {
     "warn",
     //"error",
     {
+      //"allowSeparatedGroups": false, // default
+      allowSeparatedGroups: true,
       //ignoreCase: false, // default
       //ignoreDeclarationSort: false, // default
       //ignoreMemberSort: false, // default

@@ -1,14 +1,4 @@
 const rules = {
-  "@typescript-eslint/ban-types": [
-    //"off",
-    "warn",
-    //"error",
-    {
-      //types: {},
-      //extendedDefaults: false,
-      //extendedDefaults: true,
-    },
-  ],
   "@typescript-eslint/explicit-module-boundary-types": [
     //"off",
     "warn",
@@ -32,10 +22,19 @@ const rules = {
       ignoreRestArgs: true,
     },
   ],
+  "@typescript-eslint/no-duplicate-type-constituents": "off",
+  "@typescript-eslint/no-redundant-type-constituents": "off",
+  "@typescript-eslint/no-unsafe-argument": "off",
   "@typescript-eslint/no-unsafe-assignment": "off",
   "@typescript-eslint/no-unsafe-call": "off",
   "@typescript-eslint/no-unsafe-member-access": "off",
   "@typescript-eslint/no-unsafe-return": "off",
+  "@typescript-eslint/no-unused-vars": [
+    "error",
+    {
+      argsIgnorePattern: "^_",
+    },
+  ],
   "@typescript-eslint/restrict-template-expressions": [
     "off",
     //"warn",
@@ -50,4 +49,3 @@ const rules = {
 };
 
 export default rules;
-

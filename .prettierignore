@@ -1,0 +1,10 @@
+**/CHANGELOG*.md
+/.changeset/
+/.nx/
+dist/
+entries.js
+esbuild.js
+jsconfig.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+tsconfig.json
