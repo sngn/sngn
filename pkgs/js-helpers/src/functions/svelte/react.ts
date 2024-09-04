@@ -4,9 +4,8 @@
  * but not about
  * $: react (fn, reactsToThis);
  */
- /* @__NO_SIDE_EFFECTS__ */
-export const react = (fn :() => void, ...args :any[]) :void => {
-  fn ();
+/* @__NO_SIDE_EFFECTS__ */
+export const react = (fn: () => void, ...args: any[]): void => {
+  fn();
   void args;
 };
-

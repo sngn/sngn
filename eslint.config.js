@@ -4,13 +4,12 @@ import { default as globals } from "globals";
 import { default as jsdoc } from "eslint-plugin-jsdoc";
 import { default as parserTs } from "@typescript-eslint/parser";
 import { default as path } from "node:path";
-import { default as svelte } from "eslint-plugin-svelte";
-import { default as tseslint } from "typescript-eslint";
-
 import { default as prettierRecommended } from "eslint-plugin-prettier/recommended";
 import { default as rules } from "./tools/eslint/rules.js";
 import { default as rulesSvelte } from "./tools/eslint/rulesSvelte.js";
 import { default as rulesTs } from "./tools/eslint/rulesTs.js";
+import { default as svelte } from "eslint-plugin-svelte";
+import { default as tseslint } from "typescript-eslint";
 
 // ### ### ###
 
@@ -30,6 +29,7 @@ export default tseslint.config(
       ".gitignore",
       ".nx/**/*",
       "pkgs/**/dist/**/*",
+      "pkgs/**/tests/**/*",
     ],
   },
   {
@@ -48,6 +48,10 @@ export default tseslint.config(
     rules: {
       ...rules,
       "jsdoc/require-jsdoc": "off",
+      "jsdoc/require-param-description": "off",
+      "jsdoc/require-property-description": "off",
+      "jsdoc/require-returns": "off",
+      "jsdoc/require-returns-description": "off",
     },
     //settings: {},
   },

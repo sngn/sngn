@@ -6,3 +6,5 @@
 ---
 
 npm updates
+prettier run
+linting

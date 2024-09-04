@@ -37,4 +37,3 @@ module.exports = {
   indentRule,
   indentRuleOff,
 };
-

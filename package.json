@@ -35,8 +35,7 @@
     "typescript": "5.5.4",
     "typescript-eslint": "8.4.0"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "nx": {},
   "scripts": {
     "build-all": "nx run-many -t build",

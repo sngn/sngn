@@ -4,7 +4,6 @@ import { dirname } from "node:path";
 import { default as ts } from "typescript";
 
 // ### Types
-/* eslint-disable-next-line sort-imports */
 import type { CompilerOptions } from "typescript";
 import type { ExtendedConfigCacheEntry } from "typescript";
 import type { FileExtensionInfo } from "typescript";
@@ -12,31 +11,33 @@ import type { Path } from "typescript";
 import type { WatchOptions } from "typescript";
 
 type Params = {
-  basepath ?:string;
-  outputMode ?:"configFilePath" | "readConfigFile" | "pcl";
-  processReadConfigFileOutput ?:(output :ReturnType<typeof ts.readConfigFile>) => ReturnType<typeof ts.readConfigFile>;
+  basepath?: string;
+  outputMode?: "configFilePath" | "readConfigFile" | "pcl";
+  processReadConfigFileOutput?: (
+    output: ReturnType<typeof ts.readConfigFile>,
+  ) => ReturnType<typeof ts.readConfigFile>;
 
   // ### findConfigFile options
-  configName ?:string;
-  fileExists ?:(filename :string) => boolean;
+  configName?: string;
+  fileExists?: (filename: string) => boolean;
 
   // ### readConfigFile options
-  readFile ?:(path :string) => undefined | string;
+  readFile?: (path: string) => undefined | string;
 
   // ### parseJsonConfigFileContent options
-  existingOptions ?:CompilerOptions;
-  existingWatchOptions ?:WatchOptions;
-  extendedConfigCache ?:Map<string, ExtendedConfigCacheEntry>;
-  extraFileExtensions ?:readonly FileExtensionInfo[];
-  parseConfigHost ?:ts.ParseConfigHost;
-  resolutionStack ?:Path[];
+  existingOptions?: CompilerOptions;
+  existingWatchOptions?: WatchOptions;
+  extendedConfigCache?: Map<string, ExtendedConfigCacheEntry>;
+  extraFileExtensions?: readonly FileExtensionInfo[];
+  parseConfigHost?: ts.ParseConfigHost;
+  resolutionStack?: Path[];
 };
 
 // ### ### ###
 
-const id = <T = any>(v :T) :T => v;
+const id = <T = any>(v: T): T => v;
 
-export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => {
+export const getTsConfigFromPath = (searchinitPath: string, params?: Params) => {
   const {
     basepath: pbasepath,
     configName = "tsconfig.json",
@@ -44,15 +45,16 @@ export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => 
     existingWatchOptions,
     extendedConfigCache,
     extraFileExtensions,
+    /* eslint-disable-next-line @typescript-eslint/unbound-method */
     fileExists = ts.sys.fileExists,
     outputMode = "pcl",
     parseConfigHost = ts.sys,
     processReadConfigFileOutput,
-    readFile = ts.sys.readFile,
+    readFile = ts.sys.readFile /* eslint-disable-line @typescript-eslint/unbound-method */,
     resolutionStack,
   } = params ?? {};
 
-  const configFilePath = ts.findConfigFile (searchinitPath, fileExists, configName);
+  const configFilePath = ts.findConfigFile(searchinitPath, fileExists, configName);
 
   let rv;
 
@@ -61,17 +63,17 @@ export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => 
       configFilePath,
       searchinitPath,
     };
-  }
-  else {
+  } else {
     if (!configFilePath) {
-      throw new Error (`getTsConfigFromPath Could not find configuration file for typescript, searching from ${searchinitPath}`);
+      throw new Error(
+        `getTsConfigFromPath Could not find configuration file for typescript, searching from ${searchinitPath}`,
+      );
     }
 
-    const readConfigFileOutput = ts.readConfigFile (configFilePath, readFile);
-    const {
-      config: configFileContent,
-      error: configFileError,
-    } = (processReadConfigFileOutput ?? id) (readConfigFileOutput);
+    const readConfigFileOutput = ts.readConfigFile(configFilePath, readFile);
+    const { config: configFileContent, error: configFileError } = (
+      processReadConfigFileOutput ?? id
+    )(readConfigFileOutput);
 
     if (outputMode === "readConfigFile") {
       rv = {
@@ -81,24 +83,23 @@ export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => 
         readConfigFileOutput,
         searchinitPath,
       };
-    }
-    else {
+    } else {
       if (configFileError) {
-        throw new Error ("Malformed tsconfig\n" + JSON.stringify (configFileError, null, 2));
+        throw new Error("Malformed tsconfig\n" + JSON.stringify(configFileError, null, 2));
       }
 
-      const basepath = pbasepath ?? dirname (configFilePath);
+      const basepath = pbasepath ?? dirname(configFilePath);
 
-      const pcl = ts.parseJsonConfigFileContent (
-          configFileContent,
-          parseConfigHost,
-          basepath,
-          existingOptions,
-          configFilePath,
-          resolutionStack,
-          extraFileExtensions,
-          extendedConfigCache,
-          existingWatchOptions,
+      const pcl = ts.parseJsonConfigFileContent(
+        configFileContent,
+        parseConfigHost,
+        basepath,
+        existingOptions,
+        configFilePath,
+        resolutionStack,
+        extraFileExtensions,
+        extendedConfigCache,
+        existingWatchOptions,
       );
 
       rv = {
@@ -117,4 +118,3 @@ export const getTsConfigFromPath = (searchinitPath :string, params ?:Params) => 
 };
 
 export default getTsConfigFromPath;
-

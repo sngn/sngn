@@ -5,6 +5,7 @@ dist/
 entries.js
 esbuild.js
 jsconfig.json
+pkgs/**/tests/**/*
 pnpm-lock.yaml
 pnpm-workspace.yaml
 tsconfig.json

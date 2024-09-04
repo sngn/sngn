@@ -39,7 +39,6 @@ I would have thought one ought to put the plugin before `esbuild-svelte` (or whi
 
 If it doesn't work for you after, put it in front.
 
-
 ```js
 import {default as svelteDts} from "@sngn/esbuild-svelte-dts";
 ...
@@ -65,4 +64,3 @@ type Params = {
   filter ?:RegExp;
 };
 ```
-

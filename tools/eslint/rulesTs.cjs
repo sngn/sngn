@@ -1,8 +1,8 @@
 /* eslint-env node */
 /* eslint-disable sort-keys */
 
-const eslintRules = require ("./rules.cjs");
-const indentRules = require ("./indentRule.cjs");
+const eslintRules = require("./rules.cjs");
+const indentRules = require("./indentRule.cjs");
 
 // ### ### ###
 
@@ -90,4 +90,3 @@ const rulesTs = {
 };
 
 module.exports = rulesTs;
-

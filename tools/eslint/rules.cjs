@@ -1,7 +1,7 @@
 /* eslint-env node */
 /* eslint-disable sort-keys */
 
-const indentRules = require ("./indentRule.cjs");
+const indentRules = require("./indentRule.cjs");
 
 // ### ### ###
 
@@ -44,7 +44,7 @@ const rules = {
   ],
   /* ### Best Practices ### */
   "block-scoped-var": "warn",
-  curly: [
+  "curly": [
     //"off",
     "warn",
     //"error",
@@ -85,10 +85,10 @@ const rules = {
     "warn",
     //"error",
     {
-      "boolean": true,
-      "number": true,
-      "string": true,
-      "allow": [
+      boolean: true,
+      number: true,
+      string: true,
+      allow: [
         "!!",
         //"~",
       ],
@@ -132,7 +132,7 @@ const rules = {
     "error",
     {
       //"typeof": false, // Default
-      "typeof": true,
+      typeof: true,
     },
   ],
   "no-undefined": "off",
@@ -146,16 +146,16 @@ const rules = {
     //"error",
     {
       //arrays: "never",
-      "arrays": "always-multiline",
+      arrays: "always-multiline",
       //objects: "never",
-      "objects": "always-multiline",
+      objects: "always-multiline",
       //imports: "never",
-      "imports": "always-multiline",
+      imports: "always-multiline",
       //exports: "never",
-      "exports": "always-multiline",
+      exports: "always-multiline",
       //functions: "never"
       //functions: "always-multiline",
-      "functions": "only-multiline",
+      functions: "only-multiline",
     },
   ],
   "eol-last": [
@@ -179,7 +179,7 @@ const rules = {
     //"off",
     //"warn",
     "error",
-    "unix"
+    "unix",
   ],
   "max-len": [
     //"off",
@@ -207,8 +207,8 @@ const rules = {
     "warn",
     //"error",
     {
-      "ignoreComments": false,
-      "skipBlankLines": false,
+      ignoreComments: false,
+      skipBlankLines: false,
     },
   ],
   "prefer-const": [
@@ -264,10 +264,9 @@ const rules = {
     //"error",
     "always",
     {
-      "avoidQuotes": true,
+      avoidQuotes: true,
     },
   ],
 };
 
 module.exports = rules;
-
