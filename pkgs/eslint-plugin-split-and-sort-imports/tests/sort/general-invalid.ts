@@ -9,12 +9,16 @@ import b from "a";
 import { c, d, type C } from "./r";
 import { type R, r } from "./a";
 import * as fs from "node:fs";
+import { ClassD } from "classE";
 import type { D as Da } from "../a";
 
 import type { E } from "a";
+import { ClassE } from "classD";
 /* comment before inline Test.gif */import "Test.gif";
 import test4 from "test.webp";
 import test2 from "test2.webp";
+import ClassB from "classA";
+import ClassA from "classB";
 import "test3.png";
 import { default as a } from "b";
 /*
@@ -45,6 +49,6 @@ const otherExport2 = "something else";
 
 import { lost } from "./lost"; // comment beside lost // comment2 beside lost
 
-export function openJson() {
+export function someFunction() {
   console.log(otherExport, otherExport2);
 }

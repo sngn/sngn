@@ -1,7 +1,7 @@
-import { options as options_sort_named_rx } from "../src/rules/sort-options-named-rx.js";
+import { options as options_sort_named_rx } from "../../src/rules/sort-options-named-rx.js";
 
 export const testcase = {
-  name: "sort - 'named' regular expression",
+  name: "'named' regular expression",
   code: `import { default as a } from "b";
 import { default as CapitalizedButNoClass } from "capitalizedImportSource";
 import { g } from "h";

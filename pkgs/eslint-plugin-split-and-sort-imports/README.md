@@ -65,12 +65,16 @@ import b from "a";
 import { c, d, type C } from "./r";
 import { type R, r } from "./a";
 import * as fs from "node:fs";
+import { ClassD } from "classE";
 import type { D as Da } from "../a";
 
 import type { E } from "a";
+import { ClassE } from "classD";
 /* comment before inline Test.gif */import "Test.gif";
 import test4 from "test.webp";
 import test2 from "test2.webp";
+import ClassB from "classA";
+import ClassA from "classB";
 import "test3.png";
 import { default as a } from "b";
 /*
@@ -101,7 +105,7 @@ const otherExport2 = "something else";
 
 import { lost } from "./lost"; // comment beside lost // comment2 beside lost
 
-export function openJson() {
+export function someFunction() {
   console.log(otherExport, otherExport2);
 }
 ```
@@ -139,22 +143,23 @@ import { default as a } from "b";
 import b from "a";
 // with multiple comment lines
 // comments line (c, d, type C from "./a")
-import { c } from "./r";
-import { d } from "./r";
+import { c, d, type C } from "./r";
 import { lost } from "./lost"; // comment beside lost // comment2 beside lost
-import { r } from "./a";
 
-import type { C } from "./r";
+import ClassA from "classB";
+import ClassB from "classA";
+import { ClassD } from "classE";
+import { ClassE } from "classD";
+
 import type { D as Da } from "../a";
 import type { E } from "a";
 // multiple with comment (type F, G from a)
-import type { F } from "a";
+import type { F, G as Ga } from "a";
 import type { G } from "h";
 import type { g } from "h";
-import type { G as Ga } from "a";
 import type H from "h";
 import type { h } from "h";
-import type { R } from "./a";
+import { type R, r } from "./a";
 
 // comment for otherExport
 const otherExport = "something";
@@ -163,7 +168,7 @@ const otherExport = "something";
  */
 const otherExport2 = "something else";
 
-export function openJson() {
+export function someFunction() {
   console.log(otherExport, otherExport2);
 }
 ```

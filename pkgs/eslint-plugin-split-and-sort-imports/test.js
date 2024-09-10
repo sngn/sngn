@@ -4,48 +4,64 @@ import { options as options_sort_recommended } from "./src/rules/sort-options-re
 import { options as options_sort_recommended_icons } from "./src/rules/sort-options-recommended-icons.js";
 import rule_sort from "./src/rules/sort.js";
 import rule_split from "./src/rules/split.js";
-import { testcase as sort_named_rx } from "./tests/sort-named-rx.js";
-import { testcase as sort_shortlist_minimal } from "./tests/sort-shortlist-minimal.js";
-import { testcase as sort_shortlist_recommended } from "./tests/sort-shortlist-recommended.js";
+import { testcase as sort_named_rx } from "./tests/sort/named-rx.js";
+import { testcase as sort_shortlist_minimal } from "./tests/sort/shortlist-minimal.js";
+import { testcase as sort_shortlist_recommended } from "./tests/sort/shortlist-recommended.js";
 
 import { RuleTester } from "@typescript-eslint/rule-tester";
 
 const ruleTester = new RuleTester();
 
-const sort_invalid = fs.readFileSync("./tests/sort-invalid.ts").toString();
-const sort_invalid_icons = fs.readFileSync("./tests/sort-invalid-icons.ts").toString();
-const sort_valid_minimal = fs.readFileSync("./tests/sort-valid-minimal.ts").toString();
-const sort_valid_recommended = fs
-  .readFileSync("./tests/sort-valid-recommended.ts")
+const sort_general_invalid = fs.readFileSync("./tests/sort/general-invalid.ts").toString();
+const sort_general_valid_minimal = fs
+  .readFileSync("./tests/sort/general-valid-minimal.ts")
   .toString();
-const sort_valid_recommended_icons = fs
-  .readFileSync("./tests/sort-valid-recommended-icons.ts")
+const sort_general_valid_recommended = fs
+  .readFileSync("./tests/sort/general-valid-recommended.ts")
   .toString();
-const split_invalid = fs.readFileSync("./tests/split-invalid.ts").toString();
-const split_valid_minimal = fs.readFileSync("./tests/split-valid-minimal.ts").toString();
+const sort_icons_invalid = fs.readFileSync("./tests/sort/icons-invalid.ts").toString();
+const sort_icons_valid_recommended = fs
+  .readFileSync("./tests/sort/icons-valid-recommended.ts")
+  .toString();
+const split_general_invalid = fs
+  .readFileSync("./tests/split/general-invalid.ts")
+  .toString();
+const split_general_valid = fs.readFileSync("./tests/split/general-valid.ts").toString();
+const split_multiple_imports_invalid = fs
+  .readFileSync("./tests/split/multiple-imports-invalid.ts")
+  .toString();
+const split_multiple_imports_valid = fs
+  .readFileSync("./tests/split/multiple-imports-valid.ts")
+  .toString();
+const split_peculiar_names_invalid = fs
+  .readFileSync("./tests/split/peculiar-names-invalid.ts")
+  .toString();
+const split_peculiar_names_valid = fs
+  .readFileSync("./tests/split/peculiar-names-valid.ts")
+  .toString();
 
 ruleTester.run("sort", rule_sort, {
   invalid: [
     {
-      code: sort_invalid,
+      code: sort_general_invalid,
       errors: [{ messageId: "sort-imports" }],
-      name: "sort - complex - minimal",
+      name: "general - minimal",
       options: [options_sort_minimal],
-      output: sort_valid_minimal,
+      output: sort_general_valid_minimal,
     },
     {
-      code: sort_invalid,
+      code: sort_general_invalid,
       errors: [{ messageId: "sort-imports" }],
-      name: "sort - complex - recommended",
+      name: "general - recommended",
       options: [options_sort_recommended],
-      output: sort_valid_recommended,
+      output: sort_general_valid_recommended,
     },
     {
-      code: sort_invalid_icons,
+      code: sort_icons_invalid,
       errors: [{ messageId: "sort-imports" }],
-      name: "sort - complex - recommended icons - with labels",
+      name: "icons - recommended - with labels",
       options: [options_sort_recommended_icons],
-      output: sort_valid_recommended_icons,
+      output: sort_icons_valid_recommended,
     },
   ],
   valid: [sort_shortlist_minimal, sort_shortlist_recommended, sort_named_rx],
@@ -54,21 +70,35 @@ ruleTester.run("sort", rule_sort, {
 ruleTester.run("split", rule_split, {
   invalid: [
     {
-      code: `import { F, G as Ga } from "a";`,
-      errors: [{ messageId: "split-import" }],
-      name: "multiple import",
-      output: `import { F } from "a";
-import { G as Ga } from "a";`,
-    },
-    {
-      code: split_invalid,
+      code: split_general_invalid,
       errors: [
         { messageId: "split-import" },
         { messageId: "split-import" },
         { messageId: "split-import" },
       ],
-      name: "complex invalid test",
-      output: split_valid_minimal,
+      name: "general",
+      output: split_general_valid,
+    },
+    {
+      code: split_multiple_imports_invalid,
+      errors: [
+        { messageId: "split-import" },
+        { messageId: "split-import" },
+        { messageId: "split-import" },
+      ],
+      name: "multiple imports",
+      output: split_multiple_imports_valid,
+    },
+    {
+      code: split_peculiar_names_invalid,
+      errors: [
+        { messageId: "split-import" },
+        { messageId: "split-import" },
+        { messageId: "split-import" },
+        { messageId: "split-import" },
+      ],
+      name: "peculiar names",
+      output: split_peculiar_names_valid,
     },
   ],
   valid: [

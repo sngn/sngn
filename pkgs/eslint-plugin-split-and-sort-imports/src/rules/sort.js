@@ -329,6 +329,8 @@ function sorter_noSortWithoutLName(options) {
       a_lname && !b_lname ? 1
       : !a_lname && b_lname ? -1
       : !(a_lname || b_lname) ? 0
+      : isUp_a_lname && !isUp_b_lname ? -1
+      : !isUp_a_lname && isUp_b_lname ? 1
       : a_cmp.localeCompare(
           b_cmp,
           options.localeCompare_locale,
@@ -359,6 +361,8 @@ function sorter(options) {
     return (
       a_lname && !b_lname ? 1
       : !a_lname && b_lname ? -1
+      : isUp_a_lname && !isUp_b_lname ? -1
+      : !isUp_a_lname && isUp_b_lname ? 1
       : a_cmp.localeCompare(
           b_cmp,
           options.localeCompare_locale,
