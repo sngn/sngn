@@ -202,7 +202,7 @@ function getGroup(context, d) {
   );
   /** @type {keyof typeof groups} */
   let rv;
-  /* prettier-ignore */
+  /* eslint-disable-next-line dot-notation */
   const useGroup_type = (groups["type"]?.priority ?? 0) >= 0;
   const specifier = d.specifiers.at(0);
 
@@ -253,11 +253,11 @@ function getGroup(context, d) {
 
     if (!group) {
       if (d.specifiers?.length) {
-        /* prettier-ignore */
+        /* eslint-disable-next-line dot-notation */
         const prio_default = groups["default"]?.priority ?? 0;
-        /* prettier-ignore */
+        /* eslint-disable-next-line dot-notation */
         const prio_named = groups["named"]?.priority ?? 0;
-        /* prettier-ignore */
+        /* eslint-disable-next-line dot-notation */
         const prio_namedClass = groups["namedClass"]?.priority ?? 0;
         const specifier = /** @type {ImportClause} */ (d.specifiers.at(0));
 
