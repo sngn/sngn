@@ -40,10 +40,10 @@ import type { E } from "a";
 // multiple with comment (type F, G from a)
 import type { F, G as Ga } from "a";
 import type { G } from "h";
-import type { g } from "h";
 import type H from "h";
-import type { h } from "h";
 import { type R, r } from "./a";
+import type { g } from "h";
+import type { h } from "h";
 
 // comment for otherExport
 const otherExport = "something";

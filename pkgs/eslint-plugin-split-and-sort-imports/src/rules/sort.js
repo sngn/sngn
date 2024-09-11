@@ -189,6 +189,11 @@ function getGroup(context, d) {
 
   const { groups: oGroups } = options;
 
+  const {
+    localeCompare_locale: localeCompare_locales,
+    localeCompare_options,
+  } = options;
+
   const groups = Object.entries(oGroups ?? {}).reduce(
     (acc, [gname, cg]) => {
       acc[gname] = {
@@ -227,8 +232,8 @@ function getGroup(context, d) {
         return diff === 0 ?
             a[0].localeCompare(
               b[0],
-              options.localeCompare_locale,
-              options.localeCompare_options,
+              localeCompare_locales,
+              localeCompare_options,
             )
           : diff;
       });
@@ -311,6 +316,11 @@ function getGroup(context, d) {
  * @param {ReturnType<typeof getOptions>} options
  */
 function sorter_noSortWithoutLName(options) {
+  const {
+    localeCompare_locale: localeCompare_locales,
+    localeCompare_options,
+  } = options;
+
   /**
    * @param {ImportDeclaration} a
    * @param {ImportDeclaration} b
@@ -325,6 +335,9 @@ function sorter_noSortWithoutLName(options) {
     const b_src = b.source.value;
     const b_cmp = b_lname ?? b_src;
 
+    const isUp_a_lname = typeof a_lname === "string" && a_lname[0]?.toLocaleUpperCase(localeCompare_locales) === a_lname[0];
+    const isUp_b_lname = typeof b_lname === "string" && b_lname[0]?.toLocaleUpperCase(localeCompare_locales) === b_lname[0];
+
     return (
       a_lname && !b_lname ? 1
       : !a_lname && b_lname ? -1
@@ -333,8 +346,8 @@ function sorter_noSortWithoutLName(options) {
       : !isUp_a_lname && isUp_b_lname ? 1
       : a_cmp.localeCompare(
           b_cmp,
-          options.localeCompare_locale,
-          options.localeCompare_options,
+          localeCompare_locales,
+          localeCompare_options,
         )
     );
   };
@@ -344,6 +357,11 @@ function sorter_noSortWithoutLName(options) {
  * @param {ReturnType<typeof getOptions>} options
  */
 function sorter(options) {
+  const {
+    localeCompare_locale: localeCompare_locales,
+    localeCompare_options,
+  } = options;
+
   /**
    * @param {ImportDeclaration} a - Parameter description.
    * @param {ImportDeclaration} b - Parameter description.
@@ -358,6 +376,9 @@ function sorter(options) {
     const b_src = b.source.value;
     const b_cmp = b_lname ?? b_src;
 
+    const isUp_a_lname = typeof a_lname === "string" && a_lname[0]?.toLocaleUpperCase(localeCompare_locales) === a_lname[0];
+    const isUp_b_lname = typeof b_lname === "string" && b_lname[0]?.toLocaleUpperCase(localeCompare_locales) === b_lname[0];
+
     return (
       a_lname && !b_lname ? 1
       : !a_lname && b_lname ? -1
@@ -365,8 +386,8 @@ function sorter(options) {
       : !isUp_a_lname && isUp_b_lname ? 1
       : a_cmp.localeCompare(
           b_cmp,
-          options.localeCompare_locale,
-          options.localeCompare_options,
+          localeCompare_locales,
+          localeCompare_options,
         )
     );
   };

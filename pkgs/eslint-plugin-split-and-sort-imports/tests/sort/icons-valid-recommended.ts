@@ -36,12 +36,12 @@ import { ArrowsClockwise } from "phosphor-svelte";
 import { CheckCircle } from "phosphor-svelte";
 import { CircleNotch } from "phosphor-svelte";
 import { Eye } from "phosphor-svelte";
+import { PencilSimple } from "phosphor-svelte";
+import { PlusSquare } from "phosphor-svelte";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { icon } from "@fortawesome/fontawesome-svg-core";
-import { PencilSimple } from "phosphor-svelte";
-import { PlusSquare } from "phosphor-svelte";
 
 // ### Types
 import type { D as Da } from "../a";
@@ -49,10 +49,10 @@ import type { E } from "a";
 // multiple with comment (type F, G from a)
 import type { F, G as Ga } from "a";
 import type { G } from "h";
-import type { g } from "h";
 import type H from "h";
-import type { h } from "h";
 import { type R, r } from "./a";
+import type { g } from "h";
+import type { h } from "h";
 
 // comment for otherExport
 const otherExport = "something";
