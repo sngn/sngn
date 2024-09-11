@@ -1,5 +1,6 @@
 /* comment at beginning of file */
 
+// ### Styles
 /*
  * multiline comment before test2.css
  * multiline comment line 2 test2.css
@@ -17,12 +18,15 @@ import "test3.png";
 import test2 from "test2.webp";
 import test4 from "test.webp";
 
+// ### Sideeffects
 import "./sideeffects2.js";
 import "./sideeffects1.js";
 
+// ### Namespaces
 import * as _ from "lodash";
 import * as fs from "node:fs";
 
+// ### Named
 import { default as a } from "b";
 // with comment (b from "a")
 import b from "a";

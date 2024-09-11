@@ -1,105 +1,36 @@
-import fs from "node:fs";
-import { options as options_sort_minimal } from "./src/rules/sort-options-minimal.js";
-import { options as options_sort_recommended } from "./src/rules/sort-options-recommended.js";
-import { options as options_sort_recommended_icons } from "./src/rules/sort-options-recommended-icons.js";
+import { RuleTester } from "@typescript-eslint/rule-tester";
 import rule_sort from "./src/rules/sort.js";
 import rule_split from "./src/rules/split.js";
-import { testcase as sort_named_rx } from "./tests/sort/named-rx.js";
-import { testcase as sort_shortlist_minimal } from "./tests/sort/shortlist-minimal.js";
-import { testcase as sort_shortlist_recommended } from "./tests/sort/shortlist-recommended.js";
-
-import { RuleTester } from "@typescript-eslint/rule-tester";
+import { testcase as tc_sort_custom_group_with_labels_recommended } from "./tests/sort/custom-group-with-labels-recommended.js";
+import { testcase as tc_sort_general_minimal } from "./tests/sort/general-minimal.js";
+import { testcase as tc_sort_general_recommended } from "./tests/sort/general-recommended.js";
+import { testcase as tc_sort_into_groups_recommended } from "./tests/sort/sort-into-groups-recommended.js";
+import { testcase as tc_sort_into_groups_with_labels_recommended } from "./tests/sort/sort-into-groups-with-labels-recommended.js";
+import { testcase as tc_sort_named_rx } from "./tests/sort/named-rx.js";
+import { testcase as tc_sort_shortlist_minimal } from "./tests/sort/shortlist-minimal.js";
+import { testcase as tc_sort_shortlist_recommended } from "./tests/sort/shortlist-recommended.js";
+import { testcase as tc_split_general } from "./tests/split/general.js";
+import { testcase as tc_split_multiple_imports } from "./tests/split/multiple-imports.js";
+import { testcase as tc_split_peculiar_names } from "./tests/split/peculiar-names.js";
 
 const ruleTester = new RuleTester();
 
-const sort_general_invalid = fs.readFileSync("./tests/sort/general-invalid.ts").toString();
-const sort_general_valid_minimal = fs
-  .readFileSync("./tests/sort/general-valid-minimal.ts")
-  .toString();
-const sort_general_valid_recommended = fs
-  .readFileSync("./tests/sort/general-valid-recommended.ts")
-  .toString();
-const sort_icons_invalid = fs.readFileSync("./tests/sort/icons-invalid.ts").toString();
-const sort_icons_valid_recommended = fs
-  .readFileSync("./tests/sort/icons-valid-recommended.ts")
-  .toString();
-const split_general_invalid = fs
-  .readFileSync("./tests/split/general-invalid.ts")
-  .toString();
-const split_general_valid = fs.readFileSync("./tests/split/general-valid.ts").toString();
-const split_multiple_imports_invalid = fs
-  .readFileSync("./tests/split/multiple-imports-invalid.ts")
-  .toString();
-const split_multiple_imports_valid = fs
-  .readFileSync("./tests/split/multiple-imports-valid.ts")
-  .toString();
-const split_peculiar_names_invalid = fs
-  .readFileSync("./tests/split/peculiar-names-invalid.ts")
-  .toString();
-const split_peculiar_names_valid = fs
-  .readFileSync("./tests/split/peculiar-names-valid.ts")
-  .toString();
-
 ruleTester.run("sort", rule_sort, {
   invalid: [
-    {
-      code: sort_general_invalid,
-      errors: [{ messageId: "sort-imports" }],
-      name: "general - minimal",
-      options: [options_sort_minimal],
-      output: sort_general_valid_minimal,
-    },
-    {
-      code: sort_general_invalid,
-      errors: [{ messageId: "sort-imports" }],
-      name: "general - recommended",
-      options: [options_sort_recommended],
-      output: sort_general_valid_recommended,
-    },
-    {
-      code: sort_icons_invalid,
-      errors: [{ messageId: "sort-imports" }],
-      name: "icons - recommended - with labels",
-      options: [options_sort_recommended_icons],
-      output: sort_icons_valid_recommended,
-    },
+    tc_sort_custom_group_with_labels_recommended,
+    tc_sort_general_minimal,
+    tc_sort_general_recommended,
+    tc_sort_into_groups_recommended,
+    tc_sort_into_groups_with_labels_recommended,
   ],
-  valid: [sort_shortlist_minimal, sort_shortlist_recommended, sort_named_rx],
+  valid: [tc_sort_shortlist_minimal, tc_sort_shortlist_recommended, tc_sort_named_rx],
 });
 
 ruleTester.run("split", rule_split, {
   invalid: [
-    {
-      code: split_general_invalid,
-      errors: [
-        { messageId: "split-import" },
-        { messageId: "split-import" },
-        { messageId: "split-import" },
-      ],
-      name: "general",
-      output: split_general_valid,
-    },
-    {
-      code: split_multiple_imports_invalid,
-      errors: [
-        { messageId: "split-import" },
-        { messageId: "split-import" },
-        { messageId: "split-import" },
-      ],
-      name: "multiple imports",
-      output: split_multiple_imports_valid,
-    },
-    {
-      code: split_peculiar_names_invalid,
-      errors: [
-        { messageId: "split-import" },
-        { messageId: "split-import" },
-        { messageId: "split-import" },
-        { messageId: "split-import" },
-      ],
-      name: "peculiar names",
-      output: split_peculiar_names_valid,
-    },
+    tc_split_general,
+    tc_split_multiple_imports,
+    tc_split_peculiar_names,
   ],
   valid: [
     {
