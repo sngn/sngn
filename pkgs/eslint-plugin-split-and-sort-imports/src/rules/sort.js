@@ -190,7 +190,7 @@ function getGroup(context, d) {
   const { groups: oGroups } = options;
 
   const {
-    localeCompare_locale: localeCompare_locales,
+    localeCompare_locales,
     localeCompare_options,
   } = options;
 
@@ -317,7 +317,7 @@ function getGroup(context, d) {
  */
 function sorter_noSortWithoutLName(options) {
   const {
-    localeCompare_locale: localeCompare_locales,
+    localeCompare_locales,
     localeCompare_options,
   } = options;
 
@@ -358,7 +358,7 @@ function sorter_noSortWithoutLName(options) {
  */
 function sorter(options) {
   const {
-    localeCompare_locale: localeCompare_locales,
+    localeCompare_locales,
     localeCompare_options,
   } = options;
 

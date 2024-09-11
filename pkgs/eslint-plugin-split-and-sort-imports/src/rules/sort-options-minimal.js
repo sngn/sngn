@@ -36,7 +36,7 @@ export const options = {
       sortWhenNoLocalName: true,
     },
   },
-  localeCompare_locale: "en",
+  localeCompare_locales: "en",
   localeCompare_options: {
     caseFirst: /** @type {"upper"} */ ("upper"),
     numeric: true,

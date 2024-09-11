@@ -43,10 +43,11 @@ export const schema = {
           patternProperties: { ".*": { $ref: "#/$defs/group" } },
           type: "object",
         },
-        localeCompare_locale: {
+        localeCompare_locales: {
           description:
             "Intl.LocalesArgument - locale for sorting comparison @see [MDN - String.prototype.localeCompare()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare) @see [MDN - Intl - locales argument](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument)",
-          type: "string",
+          items: { type: "string" },
+          type: ["array", "string"],
         },
         localeCompare_options: {
           description:
