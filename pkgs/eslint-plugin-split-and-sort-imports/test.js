@@ -1,4 +1,3 @@
-import { RuleTester } from "@typescript-eslint/rule-tester";
 import rule_sort from "./src/rules/sort.js";
 import rule_split from "./src/rules/split.js";
 import { testcase as tc_sort_custom_group_with_labels_recommended } from "./tests/sort/custom-group-with-labels-recommended.js";
@@ -13,6 +12,8 @@ import { testcase as tc_split_comments } from "./tests/split/comments.js";
 import { testcase as tc_split_general } from "./tests/split/general.js";
 import { testcase as tc_split_multiple_imports } from "./tests/split/multiple-imports.js";
 import { testcase as tc_split_peculiar_names } from "./tests/split/peculiar-names.js";
+
+import { RuleTester } from "@typescript-eslint/rule-tester";
 
 const ruleTester = new RuleTester();
 
