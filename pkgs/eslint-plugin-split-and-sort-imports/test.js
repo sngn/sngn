@@ -9,6 +9,7 @@ import { testcase as tc_sort_into_groups_with_labels_recommended } from "./tests
 import { testcase as tc_sort_named_rx } from "./tests/sort/named-rx.js";
 import { testcase as tc_sort_shortlist_minimal } from "./tests/sort/shortlist-minimal.js";
 import { testcase as tc_sort_shortlist_recommended } from "./tests/sort/shortlist-recommended.js";
+import { testcase as tc_split_comments } from "./tests/split/comments.js";
 import { testcase as tc_split_general } from "./tests/split/general.js";
 import { testcase as tc_split_multiple_imports } from "./tests/split/multiple-imports.js";
 import { testcase as tc_split_peculiar_names } from "./tests/split/peculiar-names.js";
@@ -28,6 +29,7 @@ ruleTester.run("sort", rule_sort, {
 
 ruleTester.run("split", rule_split, {
   invalid: [
+    tc_split_comments,
     tc_split_general,
     tc_split_multiple_imports,
     tc_split_peculiar_names,

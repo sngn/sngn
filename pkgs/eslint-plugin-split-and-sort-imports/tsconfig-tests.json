@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "emitDeclarationOnly": true,
+    "outDir": "./dist",
+    "rootDir": "./tests"
+  },
+  "extends": "../../tsconfig.json",
+  "include": [
+    "dist/sort-schema.d.ts",
+    "tests/**/*.js",
+    "tests/**/*.svelte",
+    "tests/**/*.ts",
+  ],
+}
+
