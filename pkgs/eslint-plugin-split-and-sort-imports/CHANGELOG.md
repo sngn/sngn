@@ -1,5 +1,11 @@
 # @sngn/eslint-plugin-split-and-sort-imports
 
+## 0.2.1
+
+### Patch Changes
+
+- 28bac1a: Updated README
+
 ## 0.2.0
 
 ### Breaking Changes
