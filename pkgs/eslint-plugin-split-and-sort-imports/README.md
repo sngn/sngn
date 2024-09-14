@@ -21,7 +21,8 @@ import type { F } from "a";
 import type { G as Ga } from "a";
 ```
 
-When **sort-imports** rule is enabled, imports will be sorted into groups, which are then arranged as blocks of imports. Each of these blocks will be sorted alphabetically by local import name. So code like this
+When **sort-imports** rule is enabled, imports will be sorted into groups, which are then arranged as blocks of imports.
+Each of these blocks will be sorted alphabetically by local import name. So code like this
 
 ```js
 import { r } from "./a";
@@ -53,7 +54,7 @@ The built-in import groups are
 - `named` - for named imports, ie `import { r } from "./a";`
 - `namedClass` - for named imports that start with a capital letter, ie `import { R } from "./a";`
 - `namespace` - for namespace imports, ie `import * as fs from "node:fs";`
-- `sideEffect` - for imports of the form `import "./sideeffects1.js";`
+- `sideEffect` - for imports of the form `import "./sideeffects.js";`
 - `style` - for imports of css files and the like
 - `type` - for imports of types
 
@@ -153,7 +154,9 @@ Configures the available groups. Some groups are built-in. Custom groups can als
 
 Keys of this object are the group names. Values are [`group`](#groupobject) objects.
 
-There are three standard groups, than cannot be disabled. When all other groups are disabled, all imports fall into one of these groups. These groups are
+There are three standard groups, than cannot be disabled.  
+When all other groups are disabled, all imports fall into one of these groups.  
+These groups are
 
 - named - ie `import { xyz } from "..."`
 - namespace - ie `import * as xyz from "..."`
@@ -161,12 +164,27 @@ There are three standard groups, than cannot be disabled. When all other groups 
 
 Then there are the following other groups, all of which are disabled when using 'minimal' config.
 
-- default - this group can be used for 'default' imports ("ImportDefaultSpecifier"s). It is special in that, if you want to gather default imports extra from named imports, you have to use this group. This cannot be achieved with regular expressions. This group needs to have a higher priority than 'named' group for it to be enabled. This group needs to have a higher priority than 'namedClass' group for it to gather capitalized 'default' imports.
-- namedClass - when using 'recommended' config, this group gathers imports whose 'local name' starts with a capital letter. It is not possible to further split them apart, with rxSource for example (as these match against the source, not the import name). This group needs to have a higher priority than 'named' group for it to be enabled.
-- type - when using 'recommended' config, this group is used for 'type' imports. It is not possible to further split them apart.
+- default - this group can be used for 'default' imports ("ImportDefaultSpecifier"s).  
+It is special in that, if you want to gather default imports extra from named imports, you have to use this group. This cannot be achieved with regular expressions.  
+This group needs to have a higher priority than 'named' group for it to be enabled.  
+This group needs to have a higher priority than 'namedClass' group for it to gather capitalized 'default' imports.
 
-- asset - when using 'recommended' config, this group is used for imports of 'static' assets (pictures and the like) that have no side effects. Otherwise there is nothing special about this group.
-- style - when using 'recommended' config, this group is used for imports of 'style' assets (css files and the like). 'sideEffect' imports are not sorted by default. Otherwise there is nothing special about this group.
+- namedClass - when using 'recommended' config, this group gathers imports whose 'local name' starts with a capital letter.  
+It is not possible to further split them apart, with rxSource for example (as these match against the source, not the import name).  
+This group needs to have a higher priority than 'named' group for it to be enabled.
+
+- type - when using 'recommended' config, this group is used for 'type' imports.  
+It is not possible to further split them apart.
+
+- asset - when using 'recommended' config, this group is used for imports of 'static' assets (pictures and the like)
+that have no side effects.  
+Otherwise there is nothing special about this group.  
+Adjust `rxSource` for this group (or submit PR) to add more file types to this group.
+
+- style - when using 'recommended' config, this group is used for imports of 'style' assets (css files and the like).  
+'sideEffect' type imports are not sorted by default.  
+Otherwise there is nothing special about this group.  
+Adjust `rxSource` for this group (or submit PR) to add more file types to this group.
 
 ##### localeCompare_locales
 
@@ -178,7 +196,7 @@ TODO
 
 ##### separateGroups
 
-Default `false`. When this is `true`, import blocks will be separated from another by a newline
+Default `false`. When this is `true`, import blocks will be separated from one another by a newline
 
 ##### useLabels
 
@@ -203,7 +221,7 @@ interface Group {
 
 ##### label
 
-The label for the group. See [useLabels](#uselabels).
+The label for the group. See [useLabels](#uselabels)
 
 ##### priority
 
@@ -228,11 +246,14 @@ rxSource: "/\\.s?css/";
 ##### sortWhenNoLocalName
 
 Defaults to `false`.
-When `true` imports in this group are handled as if they had no sideeffects. For instance, if you set this on "styles" group, 'sideEffect' imports are sorted, otherwise not.
+When `true` imports in this group are handled as if they had no sideeffects.  
+For instance, if you set this on "style" group, 'sideEffect' type imports are sorted, otherwise not.
 
 ### split-imports
 
-When enabled, this rule splits line with 'multiple' import syntax into single lines. There is no further configuration. This rule is auto-fixable.
+When enabled, this rule splits lines with 'multiple' import syntax into single lines.
+There is no further configuration.  
+This rule is auto-fixable.
 
 ## Examples
 
@@ -365,4 +386,7 @@ export function someFunction() {
 
 ## State of plugin and future
 
-The plugin should be functional and safe to use, but I am not so happy with the grouping functionality (`rxSource` for instance). I will try to improve this. So the config interface is not yet stable. When I am happy with everything, I will push the version to `1`. So for now, minor version changes almost certainly signify a breaking change.
+The plugin should be functional and safe to use, but I am not so happy with the grouping functionality (`rxSource` for instance).
+I will try to improve this.  
+So the configuration interface is not yet stable.  
+When I am happy with everything, I will push the version to `1`. So for now, minor version changes almost certainly signify a breaking change.
