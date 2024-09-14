@@ -4,11 +4,11 @@ An eslint plugin that sorts imports and splits 'multiple' imports into single li
 
 ## Why
 
-I could not find a plugin that sorts imports according to the "sort-imports" rule (sorting by imported name) that also works for 'type' imports and svelte files. This plugin should do all that.
+I could not find a plugin that sorts imports according to eslint's [sort-imports](https://eslint.org/docs/latest/rules/sort-imports) rule (sorting by imported name) that also works for 'type' imports and svelte files. This plugin should do all that.
 
 ## How
 
-When splitting is enabled, lines like this
+When **split-imports** rule is enabled, lines like this
 
 ```ts
 import type { F, G as Ga } from "a";
@@ -21,7 +21,7 @@ import type { F } from "a";
 import type { G as Ga } from "a";
 ```
 
-When sorting is enabled, imports will be sorted into groups, which are then arranged as blocks of imports. Each of these blocks will be sorted alphabetically by local import name. So code like this
+When **sort-imports** rule is enabled, imports will be sorted into groups, which are then arranged as blocks of imports. Each of these blocks will be sorted alphabetically by local import name. So code like this
 
 ```js
 import { r } from "./a";
@@ -29,7 +29,7 @@ import b from "a";
 import { default as a } from "b";
 ```
 
-will be transformed into
+will be (for example - can be adjusted) transformed into
 
 ```js
 import { default as a } from "b";
@@ -40,7 +40,11 @@ import { r } from "./a";
 The exception are imports where order might be important, namely imports of the form `import "./sideeffects.js";`  
 These are not sorted by default and original order is maintained.
 
+The plugin looks at the code between the first and last imports (including comments associated with these imports), say lines `n` to `m`, does its thing and replaces lines `n` to `m` with the result.
+
 ### Import groups
+
+Imports are categorized and placed into an 'import group'. Custom groups can be configured.
 
 The built-in import groups are
 
@@ -58,13 +62,11 @@ The built-in import groups are
 Regarding comments in code, the plugin tries to be as unobtrusive as possible.
 So comments will in general stay where they are.
 
-Comments directly above/next to any ast node (between the first and the last import in the input file) will stay with that import.
+Comments that end on the line directly above a node will stay with that node.  
+Comments that end on the same line as the start of the node will stay with that node.  
+Comments that start on the same line as the end of the node will stay with that node.  
 
-When splitting an import with 'multiple' syntax, the comment above stays with the first import.
-
-Comments that are above a node, but are separated by a newline or -lines, are regarded as belonging to that node.  
-The exception is the first import line in the file. This only gets the comments directly 'attached' to it.  
-See [examples](#examples) for how this works in practice.
+Also, for all but the first import, comments above, that are not associated with another import, will be associated with that import, even if there are newlines separating. See [examples](#examples) for how this works in practice.
 
 ## Installation and Usage
 
@@ -117,9 +119,17 @@ export default [
 ];
 ```
 
-## Configuration
+## Rules
 
-### config.groupOrder
+### sort-imports
+
+This rule sorts imports according to the [sort-imports](https://eslint.org/docs/latest/rules/sort-imports) rule.  
+It does not sort 'multiple' imports, as the eslint rule already does that, and also doesn't sort them before 'single' imports (it doesn't fix the "Expected 'multiple' syntax before 'single' syntax" message). Although that is not an issue if 'split-imports' is enabled.  
+This rule is auto-fixable.
+
+#### Configuration
+
+##### groupOrder
 
 Defines the order of the import blocks. Missing blocks will be appended at the end.
 The default is:
@@ -137,11 +147,11 @@ groupOrder: [
 ]
 ```
 
-### config.groups
+##### groups
 
 Configures the available groups. Some groups are built-in. Custom groups can also be configured.
 
-Keys of this object are the group names. Values are `group` objects. See below for documentation on these.
+Keys of this object are the group names. Values are [`group`](#groupobject) objects.
 
 There are three standard groups, than cannot be disabled. When all other groups are disabled, all imports fall into one of these groups. These groups are
 
@@ -158,29 +168,29 @@ Then there are the following other groups, all of which are disabled when using 
 - asset - when using 'recommended' config, this group is used for imports of 'static' assets (pictures and the like) that have no side effects. Otherwise there is nothing special about this group.
 - style - when using 'recommended' config, this group is used for imports of 'style' assets (css files and the like). 'sideEffect' imports are not sorted by default. Otherwise there is nothing special about this group.
 
-### config.localeCompare_locales
+##### localeCompare_locales
 
 TODO
 
-### config.localeCompare_options
+##### localeCompare_options
 
 TODO
 
-### config.separateGroups
+##### separateGroups
 
 Default `false`. When this is `true`, import blocks will be separated from another by a newline
 
-### config.useLabels
+##### useLabels
 
-Default `false`. When set to `true`, and an import group has a label set, the import block will be preceded by a comment containing the label, like this:
+Default `false`. When set to `true`, and an import group has a label set, the import block will be preceded by a comment containing the label. So if the label is '### Label for an import group', it looks like this:
 
 ```js
-// {label of import group}
+// ### Label for an import group
 ```
 
 This feature is not very sophisticated, so use with care. Meaning that when you add a new import that goes to the top of the import group after sorting, then the label comment will be added to the top of the block, while the previous top import also will retain the comment. Might fix this in the future.
 
-### group objects
+#### 'group' object
 
 ```ts
 interface Group {
@@ -191,11 +201,11 @@ interface Group {
 }
 ```
 
-#### label
+##### label
 
-The label for the group. See [useLabels](#configuselabels).
+The label for the group. See [useLabels](#uselabels).
 
-#### priority
+##### priority
 
 Defaults to `0`.
 When more than one regular expression from different groups matches, then the group with higher priority wins. Negative value disables the group.
@@ -205,7 +215,7 @@ There are three standard groups, than cannot be disabled. When all other groups 
 - namespace
 - sideEffect
 
-#### rxSource
+##### rxSource
 
 String representation of a regular expression that selects the imports for this group. It is matched against the source string (the string 'source' in `import ... from "source"`).
 
@@ -215,12 +225,16 @@ This must be a string that starts and ends with `/`, as a regular expression wou
 rxSource: "/\\.s?css/";
 ```
 
-#### sortWhenNoLocalName
+##### sortWhenNoLocalName
 
 Defaults to `false`.
 When `true` imports in this group are handled as if they had no sideeffects. For instance, if you set this on "styles" group, 'sideEffect' imports are sorted, otherwise not.
 
-### Examples
+### split-imports
+
+When enabled, this rule splits line with 'multiple' import syntax into single lines. There is no further configuration. This rule is auto-fixable.
+
+## Examples
 
 The plugin with recommended rules enabled turns this code
 
@@ -348,3 +362,7 @@ export function someFunction() {
   console.log(otherExport, otherExport2);
 }
 ```
+
+## State of plugin and future
+
+The plugin should be functional and safe to use, but I am not so happy with the grouping functionality (`rxSource` for instance). I will try to improve this. So the config interface is not yet stable. When I am happy with everything, I will push the version to `1`. So for now, minor version changes almost certainly signify a breaking change.
