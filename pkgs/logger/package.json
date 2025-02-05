@@ -34,7 +34,7 @@
     "esbuild-node-externals": "1.14.0",
     "esbuild-plugin-d.ts": "1.2.2",
     "shx": "0.3.4",
-    "typescript": "5.5.4"
+    "typescript": "5.7.3"
   },
   "scripts": {
     "build": "node esbuild.js",
