@@ -186,8 +186,6 @@ function getGroup(context, d) {
 
   const { groups: oGroups } = options;
 
-  const { localeCompare_locales, localeCompare_options } = options;
-
   const groups = Object.entries(oGroups ?? {}).reduce(
     (acc, [gname, cg]) => {
       acc[gname] = {
@@ -223,9 +221,13 @@ function getGroup(context, d) {
 
         const diff = prioA - prioB;
 
-        return diff === 0 ?
-            a[0].localeCompare(b[0], localeCompare_locales, localeCompare_options)
-          : diff;
+        return (
+          diff === 0 ?
+            a[0] < b[0] ? -1
+            : a[0] === b[0] ? 0
+            : 1
+          : diff
+        );
       });
 
     for (let i = 0; i < groupsWithRxSource.length; i++) {
@@ -303,11 +305,9 @@ function getGroup(context, d) {
 }
 
 /**
- * @param {ReturnType<typeof getOptions>} options
+ * @param {ReturnType<typeof getOptions>} _options
  */
-function sorter_noSortWithoutLName(options) {
-  const { localeCompare_locales, localeCompare_options } = options;
-
+function sorter_noSortWithoutLName(_options) {
   /**
    * @param {ImportDeclaration} a
    * @param {ImportDeclaration} b
@@ -322,30 +322,21 @@ function sorter_noSortWithoutLName(options) {
     const b_src = b.source.value;
     const b_cmp = b_lname ?? b_src;
 
-    const isUp_a_lname =
-      typeof a_lname === "string" &&
-      a_lname[0]?.toLocaleUpperCase(localeCompare_locales) === a_lname[0];
-    const isUp_b_lname =
-      typeof b_lname === "string" &&
-      b_lname[0]?.toLocaleUpperCase(localeCompare_locales) === b_lname[0];
-
     return (
       a_lname && !b_lname ? 1
       : !a_lname && b_lname ? -1
       : !(a_lname || b_lname) ? 0
-      : isUp_a_lname && !isUp_b_lname ? -1
-      : !isUp_a_lname && isUp_b_lname ? 1
-      : a_cmp.localeCompare(b_cmp, localeCompare_locales, localeCompare_options)
+      : a_cmp < b_cmp ? -1
+      : a_cmp === b_cmp ? 0
+      : 1
     );
   };
 }
 
 /**
- * @param {ReturnType<typeof getOptions>} options
+ * @param {ReturnType<typeof getOptions>} _options
  */
-function sorter(options) {
-  const { localeCompare_locales, localeCompare_options } = options;
-
+function sorter(_options) {
   /**
    * @param {ImportDeclaration} a - Parameter description.
    * @param {ImportDeclaration} b - Parameter description.
@@ -360,19 +351,12 @@ function sorter(options) {
     const b_src = b.source.value;
     const b_cmp = b_lname ?? b_src;
 
-    const isUp_a_lname =
-      typeof a_lname === "string" &&
-      a_lname[0]?.toLocaleUpperCase(localeCompare_locales) === a_lname[0];
-    const isUp_b_lname =
-      typeof b_lname === "string" &&
-      b_lname[0]?.toLocaleUpperCase(localeCompare_locales) === b_lname[0];
-
     return (
       a_lname && !b_lname ? 1
       : !a_lname && b_lname ? -1
-      : isUp_a_lname && !isUp_b_lname ? -1
-      : !isUp_a_lname && isUp_b_lname ? 1
-      : a_cmp.localeCompare(b_cmp, localeCompare_locales, localeCompare_options)
+      : a_cmp < b_cmp ? -1
+      : a_cmp === b_cmp ? 0
+      : 1
     );
   };
 }

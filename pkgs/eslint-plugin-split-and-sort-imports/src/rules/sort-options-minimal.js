@@ -36,11 +36,6 @@ export const options = {
       sortWhenNoLocalName: true,
     },
   },
-  localeCompare_locales: "en",
-  localeCompare_options: {
-    caseFirst: /** @type {"upper"} */ ("upper"),
-    numeric: true,
-  },
   separateGroups: false, // TODO make dependent on sort-imports/allowSeparatedGroups
   useLabels: false,
 };

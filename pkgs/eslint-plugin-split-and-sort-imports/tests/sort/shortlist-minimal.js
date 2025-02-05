@@ -11,6 +11,8 @@ import type { G } from "h";
 import type H from "h";
 import { type R, r } from "./a";
 import { default as a } from "b";
+import type { aA } from "h";
+import type { aa } from "h";
 // with comment (b from "a")
 import b from "a";
 // with multiple comment lines

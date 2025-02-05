@@ -18,6 +18,8 @@ import type { F, G as Ga } from "a";
 import type { G } from "h";
 import type H from "h";
 import { type R, r } from "./a";
+import type { aA } from "h";
+import type { aa } from "h";
 import type { g } from "h";
 import type { h } from "h";
 `,

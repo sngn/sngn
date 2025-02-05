@@ -186,14 +186,6 @@ Adjust `rxSource` for this group (or submit PR) to add more file types to this g
 Otherwise there is nothing special about this group.  
 Adjust `rxSource` for this group (or submit PR) to add more file types to this group.
 
-##### localeCompare_locales
-
-TODO
-
-##### localeCompare_options
-
-TODO
-
 ##### separateGroups
 
 Default `false`. When this is `true`, import blocks will be separated from one another by a newline
