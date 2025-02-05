@@ -4,6 +4,8 @@ import { options as options_sort_recommended } from "./rules/sort-options-recomm
 import rule_sort from "./rules/sort.js";
 import rule_split from "./rules/split.js";
 
+import { URL } from "url";
+
 /** @typedef {import("eslint").Linter.Config} Config */
 /** @typedef {import("eslint").ESLint.Plugin} Plugin */
 

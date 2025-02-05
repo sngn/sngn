@@ -1,6 +1,8 @@
 import { options as options_sort_minimal } from "./sort-options-minimal.js";
 import { schema } from "./sort-schema.js";
 
+import { AST_NODE_TYPES } from "@typescript-eslint/types";
+
 /** @typedef {import("../../dist/sort-schema.d.ts").Group} Group */
 /** @typedef {import("../../dist/sort-schema.d.ts").SortSchema} SortSchema */
 /** @typedef {import("@typescript-eslint/types").TSESTree.Comment} Comment */
@@ -15,11 +17,12 @@ import { schema } from "./sort-schema.js";
 /** @typedef {import("@typescript-eslint/types").TSESTree.TSModuleBlock} TSModuleBlock */
 /** @typedef {import("eslint").Rule.RuleContext} RuleContext */
 /** @typedef {import("estree").Comment} CommentX */
+/** @typedef {import("estree").ImportDeclaration} ImportDeclarationX */
 /** @typedef {import("estree").Node} NodeX */
 /** @typedef {import("estree").Program} ProgramX */
 /** @typedef {import("estree").SourceLocation} SourceLocationX */
 
-/** @typedef {(Program|TSModuleBlock)} ExtractableNode */
+/** @typedef {(Program|ProgramStatement)} ExtractableNode */
 /** @typedef {("asset"|"named"|"namedClass"|"namespace"|"sideEffect"|"style"|"type")} ImportGroup */
 /** @typedef {ProgramStatement[]} OtherDeclarations */
 
@@ -84,24 +87,18 @@ function extract_and_file(node) {
   /** @type {[ExtractableNode, Extracted][]} */
   const sub_pre = [];
 
-  if (Array.isArray(node.body)) {
+  if ("body" in node && Array.isArray(node.body)) {
     node.body.forEach((bodyNode) => {
-      if (bodyNode.type === "ImportDeclaration") {
+      if (bodyNode.type === AST_NODE_TYPES.ImportDeclaration) {
         ids.push(bodyNode);
       } else {
         ods_pre.push(bodyNode);
 
-        if (
-          Array.isArray(
-            /** @type {ExtractableNode} */ (/** @type {unknown} */ (bodyNode)).body,
-          )
-        ) {
-          const bNode = /** @type {ExtractableNode} */ (/** @type {unknown} */ (bodyNode));
-
-          const nb_extracted = extract_and_file(bNode);
+        if ("body" in bodyNode && Array.isArray(bodyNode.body)) {
+          const nb_extracted = extract_and_file(bodyNode);
 
           if (nb_extracted.ids.length || nb_extracted.sub.length) {
-            sub_pre.push([bNode, nb_extracted]);
+            sub_pre.push([bodyNode, nb_extracted]);
           }
         }
       }
@@ -484,7 +481,7 @@ function createTemplate(params) {
 
         if (useLabels && groupLabel) {
           const sourceCode = context.sourceCode;
-          const first_id = /** @type {ImportDeclaration} */ (group[0]);
+          const first_id = /** @type {ImportDeclarationX} */ (group[0]);
           const comments = sourceCode.getCommentsBefore(first_id);
 
           if (comments.length) {
