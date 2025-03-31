@@ -42,6 +42,8 @@
     "build-all": "nx run-many -t build",
     "build-all-affected": "nx affected run-many -t build",
     "build-all-sc": "nx run-many --skip-nx-cache -t build",
+    "lint": "pnpm eslint pkgs --fix",
+    "prettify": "pnpm exec prettier . --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
