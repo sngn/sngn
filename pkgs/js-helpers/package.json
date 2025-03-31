@@ -14,6 +14,9 @@
     "directory": "pkgs/js-helpers"
   },
   "type": "module",
+  "imports": {
+    "#src/*": "./src/*"
+  },
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",

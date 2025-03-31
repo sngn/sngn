@@ -5,6 +5,9 @@
     "declarationDir": "./dist/types",
     "emitDeclarationOnly": true,
     "outDir": "./dist",
+    "paths": {
+      "#src/*": ["./src/*"],
+    },
     "rootDir": "./src"
   },
   "extends": "../../tsconfig.json",
