@@ -3,6 +3,7 @@
   "name": "@sngn/public",
   "description": "sngn public monorepo",
   "author": "Maximilian Stejskal",
+  "license": "GPLv3",
   "repository": "github:sngn/public",
   "engines": {
     "node": ">=19.6.0",

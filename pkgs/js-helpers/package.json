@@ -7,7 +7,7 @@
     "typescript"
   ],
   "author": "Maximilian Stejskal",
-  "license": "MIT",
+  "license": "GPLv3",
   "repository": {
     "type": "git",
     "url": "https://github.com/sngn/sngn.git",
