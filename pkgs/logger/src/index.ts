@@ -55,7 +55,6 @@ export const hasLogLevel =
     isString(lvl) && logLevels.includes(lvl as unknown as TLogLevel);
 
 /**
- *
  * @param options
  */
 export function createLogger<TLogLevel extends string = LogLevel>(
@@ -70,7 +69,6 @@ export function createLogger<TLogLevel extends string = LogLevel>(
   const hasLevel = hasLogLevel(logLevels);
 
   /**
-   *
    * @param level
    */
   function logger(level?: TLogLevel): Logger<TLogLevel> {

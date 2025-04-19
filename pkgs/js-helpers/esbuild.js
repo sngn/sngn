@@ -1,8 +1,7 @@
-/* eslint-env node */
-
 import { build } from "esbuild";
 import { dtsPlugin } from "esbuild-plugin-d.ts";
 import { nodeExternalsPlugin } from "esbuild-node-externals";
+import { default as process } from "node:process";
 
 // ### ### ###
 
@@ -53,4 +52,3 @@ const esmbuild = build (optEsm);
   cjsbuild,
   esmbuild,
 ]).catch(() => process.exit(1));
-

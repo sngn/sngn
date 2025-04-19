@@ -24,6 +24,7 @@ const config = {
   printWidth: 92,
   quoteProps: "consistent",
   singleAttributePerLine: true,
+  trailingComma: "all", // default
 };
 
 export default config;

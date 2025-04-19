@@ -52,4 +52,3 @@ const esmbuild = build (optEsm);
   cjsbuild,
   esmbuild,
 ]).catch(() => process.exit(1));
-

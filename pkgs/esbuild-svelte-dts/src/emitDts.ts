@@ -185,7 +185,6 @@ function prepareTsconfig(params: Params): ReturnType<typeof getTsconfigFromPath>
 }
 
 /**
- *
  * @param params - TODO
  */
 function main(params: Params): void {

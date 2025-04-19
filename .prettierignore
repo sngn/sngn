@@ -9,3 +9,4 @@ pkgs/**/tests/**/*
 pnpm-lock.yaml
 pnpm-workspace.yaml
 tsconfig.json
+tsconfig*.json

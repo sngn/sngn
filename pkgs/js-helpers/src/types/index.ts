@@ -5,7 +5,7 @@ export type ExtractLast<T extends any[]> = T extends [...any[], infer R] ? R : u
 export type ExtractTail<T extends any[]> =
   T extends [infer _, ...infer ExtractedTail] ? ExtractedTail : [];
 export type Fn<A, B> = (a: A) => B;
-export type Thunk<B> = () => B;
+export type Thunk<Out = any> = () => Out;
 export type TypeGuard<T> = (v: any) => v is T;
 
 export type HasMap<A = any> = { map: <B = any>(fn: Fn<A, B>) => HasMap<B> };

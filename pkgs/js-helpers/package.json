@@ -21,14 +21,12 @@
     ".": {
       "types": "./dist/types/index.d.ts",
       "import": "./dist/esm/index.mjs",
-      "require": "./dist/cjs/index.cjs",
-      "default": "./dist/esm/index.mjs"
+      "require": "./dist/cjs/index.cjs"
     },
     "./testFunctions": {
       "types": "./dist/types/testFunctions/index.d.ts",
       "import": "./dist/esm/testFunctions/index.mjs",
-      "require": "./dist/cjs/testFunctions/index.cjs",
-      "default": "./dist/esm/testFunctions/index.mjs"
+      "require": "./dist/cjs/testFunctions/index.cjs"
     }
   },
   "files": [

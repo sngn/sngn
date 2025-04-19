@@ -1,5 +1,5 @@
 import { default as eslintjs } from "@eslint/js";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 import { default as globals } from "globals";
 import { default as jsdoc } from "eslint-plugin-jsdoc";
 import { default as parserTs } from "@typescript-eslint/parser";
