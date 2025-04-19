@@ -42,8 +42,8 @@
   "devDependencies": {
     "@types/eslint": "9.6.1",
     "@types/estree": "1.0.7",
-    "@typescript-eslint/rule-tester": "8.23.0",
-    "@typescript-eslint/types": "8.23.0",
+    "@typescript-eslint/rule-tester": "8.30.1",
+    "@typescript-eslint/types": "8.30.1",
     "shx": "0.4.0"
   },
   "scripts": {
