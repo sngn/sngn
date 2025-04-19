@@ -1,5 +1,18 @@
 # @sngn/get-tsconfig-from-path
 
+## 0.1.0
+
+### Minor Changes
+
+- f7ef4ea: Change of license. MIT -> GPLv3
+
+### Patch Changes
+
+- 5bedb42: updated dependencies
+- ac0fe21: npm updates
+  prettier run
+  linting
+
 ## 0.0.2
 
 ### Patch Changes

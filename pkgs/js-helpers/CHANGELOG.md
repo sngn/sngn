@@ -1,5 +1,21 @@
 # @sngn/js-helpers
 
+## 0.3.0
+
+### Minor Changes
+
+- f7ef4ea: Change of license. MIT -> GPLv3
+
+### Patch Changes
+
+- 1504b17: update dev dependencies
+- 5bedb42: updated dependencies
+- ac0fe21: npm updates
+  prettier run
+  linting
+- f7ef4ea: Added a dynamically typed "pipe" function
+- e65c790: Added pipe function(s)
+
 ## 0.2.6
 
 ### Patch Changes

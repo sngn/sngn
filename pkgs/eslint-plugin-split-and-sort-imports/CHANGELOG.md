@@ -1,5 +1,15 @@
 # @sngn/eslint-plugin-split-and-sort-imports
 
+## 0.4.0
+
+### Minor Changes
+
+- f7ef4ea: Change of license. MIT -> GPLv3
+
+### Patch Changes
+
+- 5bedb42: updated dependencies
+
 ## 0.3.0
 
 ### Minor Changes

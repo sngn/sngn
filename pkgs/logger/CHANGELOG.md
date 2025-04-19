@@ -1,5 +1,19 @@
 # @sngn/logger
 
+## 0.3.0
+
+### Minor Changes
+
+- f7ef4ea: Change of license. MIT -> GPLv3
+
+### Patch Changes
+
+- 1504b17: update dev dependencies
+- 5bedb42: updated dependencies
+- ac0fe21: npm updates
+  prettier run
+  linting
+
 ## 0.2.3
 
 ### Patch Changes
