@@ -1,5 +1,5 @@
-import type { AnyFunc } from "#src/types/index.js";
 import type { FirstParameters } from "./shared.js";
+import type { Fn } from "#src/types/index.js";
 import type { LastReturnType } from "./shared.js";
 import type { PipeArgs } from "./shared.js";
 
@@ -17,7 +17,7 @@ export type PipeException<E = unknown> = {
  * is wrapped in a PipeException
  * @param fns
  */
-export function pipe<F extends AnyFunc[]>(...fns: PipeArgs<F> extends F ? F : PipeArgs<F>) {
+export function pipe<F extends Fn[]>(...fns: PipeArgs<F> extends F ? F : PipeArgs<F>) {
   return function (arg) {
     let output = arg;
 

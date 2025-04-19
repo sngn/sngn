@@ -1,7 +1,7 @@
-import type { Fn } from "../types/index.js";
+import type { Fn1 } from "../types/index.js";
 import type { HasMap } from "../types/index.js";
 
 export const map =
-  <A = any, B = any>(fn: Fn<A, B>) =>
-  (value: HasMap<A>): HasMap<B> =>
+  <In = any, Out = any>(fn: Fn1<In, Out>) =>
+  (value: HasMap<In>): HasMap<Out> =>
     value.map(fn);

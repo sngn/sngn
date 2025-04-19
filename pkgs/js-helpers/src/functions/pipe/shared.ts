@@ -1,5 +1,5 @@
-import type { AnyFunc } from "#src/types/index.js";
 import type { ExtractLast } from "#src/types/index.js";
+import type { Fn } from "#src/types/index.js";
 
 type FnErrorInputType<
   ExpectedInputType = unknown,
@@ -7,12 +7,12 @@ type FnErrorInputType<
   OutputType = unknown,
 > = (expArg: ExpectedInputType, arg: ActualInputType) => OutputType;
 
-export type FirstParameters<F extends any[]> = F[0] extends AnyFunc ? Parameters<F[0]> : [];
+export type FirstParameters<F extends any[]> = F[0] extends Fn ? Parameters<F[0]> : [];
 export type LastReturnType<F extends any[], Input = any> =
   // F.length >= 1
-  F extends [...AnyFunc[], infer Last] ?
+  F extends [...Fn[], infer Last] ?
     // F.length >= 1
-    Last extends AnyFunc ?
+    Last extends Fn ?
       ReturnType<Last>
     : never
   : // F.length === 0
@@ -21,7 +21,7 @@ export type LastReturnType<F extends any[], Input = any> =
 /**
  * @param APlus only used when `Acc.length === 0`
  */
-type FSingle<Acc extends AnyFunc[], A, B, APlus extends any[] = []> =
+type FSingle<Acc extends Fn[], A, B, APlus extends any[] = []> =
   // if Acc.length >= 1
   ExtractLast<Acc> extends (..._: any) => infer B0 ?
     // Acc.length >= 1
@@ -36,16 +36,16 @@ type FSingle<Acc extends AnyFunc[], A, B, APlus extends any[] = []> =
 /**
  * @param APlus only used when `Acc.length === 0`
  */
-type FMulti<Acc extends AnyFunc[], A, B, Tail extends any[], APlus extends any[] = []> =
+type FMulti<Acc extends Fn[], A, B, Tail extends any[], APlus extends any[] = []> =
   // if Tail has correct type
-  Tail extends AnyFunc[] ?
+  Tail extends Fn[] ?
     // if Acc.length >= 1
     ExtractLast<Acc> extends (..._: any) => infer B0 ?
       // Acc.length >= 1
       B0 extends A ?
         // types match
         // if Tail.length >= 1
-        Tail extends [AnyFunc, ...AnyFunc[]] ?
+        Tail extends [Fn, ...Fn[]] ?
           // Tail.length >= 1
           PipeArgs<Tail, [...Acc, (arg: A) => B]> // recurse over tail
         : // Tail.length === 0
@@ -54,9 +54,9 @@ type FMulti<Acc extends AnyFunc[], A, B, Tail extends any[], APlus extends any[]
         PipeArgs<Tail, [...Acc, FnErrorInputType<B0, A, B>]> // recurse over tail
     : // Acc.length === 0
       PipeArgs<Tail, FSingle<Acc, A, B, APlus>>
-  : ["Tail contains other types than AnyFunc"];
+  : ["Tail contains other types than Fn"];
 
-export type PipeArgs<F extends AnyFunc[], Acc extends AnyFunc[] = []> =
+export type PipeArgs<F extends Fn[], Acc extends Fn[] = []> =
   // if F.length === 1
   F extends [(arg: infer A, ...args: infer APlus) => infer B] ?
     // F.length === 1

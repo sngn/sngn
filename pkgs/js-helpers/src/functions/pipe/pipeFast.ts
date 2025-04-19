@@ -1,5 +1,5 @@
-import type { AnyFunc } from "#src/types/index.js";
 import type { FirstParameters } from "./shared.js";
+import type { Fn } from "#src/types/index.js";
 import type { LastReturnType } from "./shared.js";
 import type { PipeArgs } from "./shared.js";
 
@@ -9,9 +9,7 @@ import type { PipeArgs } from "./shared.js";
  * For low numbers of piped functions (< 100), use regular pipe function
  * @param fns
  */
-export function pipeFast<F extends AnyFunc[]>(
-  ...fns: PipeArgs<F> extends F ? F : PipeArgs<F>
-) {
+export function pipeFast<F extends Fn[]>(...fns: PipeArgs<F> extends F ? F : PipeArgs<F>) {
   const fnsLength = fns.length;
 
   return function (arg) {
