@@ -8,13 +8,19 @@ import { default as prettierRecommended } from "eslint-plugin-prettier/recommend
 import { default as rules } from "./tools/eslint/rules.js";
 import { default as rulesSvelte } from "./tools/eslint/rulesSvelte.js";
 import { default as rulesTs } from "./tools/eslint/rulesTs.js";
+import { default as splitAndSortImports } from "@sngn/eslint-plugin-split-and-sort-imports";
 import { default as svelte } from "eslint-plugin-svelte";
 import { default as tseslint } from "typescript-eslint";
+
+/** @typedef {import("eslint").Linter.Config} Config */
 
 // ### ### ###
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+
+const splitAndSortImports_config_recommended = /** @type {Config[]} */ (splitAndSortImports.configs?.["recommended"] ?? []);
 
 export default tseslint.config(
   eslintjs.configs.recommended,
@@ -23,6 +29,7 @@ export default tseslint.config(
   ...svelte.configs["flat/recommended"], // must come after tseslint.configs.recommendedTypeChecked
   ...svelte.configs["flat/prettier"], // must come after tseslint.configs.recommendedTypeChecked
   prettierRecommended,
+  ...splitAndSortImports_config_recommended,
   {
     /* prettier-ignore */
     ignores: [
