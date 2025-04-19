@@ -10,6 +10,7 @@
     "pnpm": ">=7.26.0"
   },
   "type": "module",
+  "dependencies": {},
   "devDependencies": {
     "@changesets/cli": "2.29.2",
     "@eslint/eslintrc": "3.3.1",
@@ -36,7 +37,6 @@
     "typescript": "5.8.3",
     "typescript-eslint": "8.30.1"
   },
-  "dependencies": {},
   "nx": {},
   "scripts": {
     "build-all": "nx run-many -t build",
