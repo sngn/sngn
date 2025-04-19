@@ -3,8 +3,8 @@ import { schema } from "./sort-schema.js";
 
 import { AST_NODE_TYPES } from "@typescript-eslint/types";
 
-/** @typedef {import("../../dist/sort-schema.d.ts").Group} Group */
-/** @typedef {import("../../dist/sort-schema.d.ts").SortSchema} SortSchema */
+/** @typedef {import("../generated/sort-schema.d.ts").Group} Group */
+/** @typedef {import("../generated/sort-schema.d.ts").SortSchema} SortSchema */
 /** @typedef {import("@typescript-eslint/types").TSESTree.Comment} Comment */
 /** @typedef {import("@typescript-eslint/types").TSESTree.ImportClause} ImportClause */
 /** @typedef {import("@typescript-eslint/types").TSESTree.ImportDeclaration} ImportDeclaration */

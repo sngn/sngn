@@ -9,7 +9,6 @@
   },
   "extends": "../../tsconfig.json",
   "include": [
-    "dist/sort-schema.d.ts",
     "src/**/*.js",
     "src/**/*.ts",
   ],

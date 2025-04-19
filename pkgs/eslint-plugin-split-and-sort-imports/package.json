@@ -47,15 +47,16 @@
     "shx": "0.4.0"
   },
   "scripts": {
-    "build": "pnpm run build:schemadts; pnpm run build:types",
+    "build": "pnpm run build:schemadts; pnpm run copy:generated; pnpm run build:types",
     "build-nx": "nx run @sngn/eslint-plugin-split-and-sort-imports:build",
     "build-nx-sc": "nx run --skip-nx-cache --verbose @sngn/eslint-plugin-split-and-sort-imports:build",
-    "build:schemadts": "pnpm run build:schemajson && json2ts --input dist/sort-schema.json --output dist/sort-schema.d.ts",
-    "build:schemajson": "mkdir -p dist; cat src/rules/sort-schema.js | sed -e 's/export const schema = //' -e 's/};/}/' -e 's/^\\s*\\/.*$//' | grep -v '^$' | prettier --parser json > dist/sort-schema.json",
+    "build:schemadts": "pnpm run build:schemajson && json2ts --input src/generated/sort-schema.json --output src/generated/sort-schema.d.ts",
+    "build:schemajson": "mkdir -p src/generated; cat src/rules/sort-schema.js | sed -e 's/export const schema = //' -e 's/};/}/' -e 's/^\\s*\\/.*$//' | grep -v '^$' | prettier --parser json > src/generated/sort-schema.json",
     "build:types": "tsc --emitDeclarationOnly",
     "cbuild": "pnpm run clean && pnpm run build",
     "cbuild-nx": "pnpm run clean && pnpm run build-nx",
-    "clean": "shx rm -rf ./dist/*",
+    "clean": "shx rm -rf ./dist/* ./src/generated/*",
+    "copy:generated": "shx mkdir -p dist/types src/generated && shx cp -r src/generated dist/types",
     "test": "node --import ./tests/ruletester-setup.js --test"
   }
 }
