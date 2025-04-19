@@ -65,7 +65,7 @@ So comments will in general stay where they are.
 
 Comments that end on the line directly above a node will stay with that node.  
 Comments that end on the same line as the start of the node will stay with that node.  
-Comments that start on the same line as the end of the node will stay with that node.  
+Comments that start on the same line as the end of the node will stay with that node.
 
 Also, for all but the first import, comments above, that are not associated with another import, will be associated with that import, even if there are newlines separating. See [examples](#examples) for how this works in practice.
 
@@ -165,26 +165,26 @@ These groups are
 Then there are the following other groups, all of which are disabled when using 'minimal' config.
 
 - default - this group can be used for 'default' imports ("ImportDefaultSpecifier"s).  
-It is special in that, if you want to gather default imports extra from named imports, you have to use this group. This cannot be achieved with regular expressions.  
-This group needs to have a higher priority than 'named' group for it to be enabled.  
-This group needs to have a higher priority than 'namedClass' group for it to gather capitalized 'default' imports.
+  It is special in that, if you want to gather default imports extra from named imports, you have to use this group. This cannot be achieved with regular expressions.  
+  This group needs to have a higher priority than 'named' group for it to be enabled.  
+  This group needs to have a higher priority than 'namedClass' group for it to gather capitalized 'default' imports.
 
 - namedClass - when using 'recommended' config, this group gathers imports whose 'local name' starts with a capital letter.  
-It is not possible to further split them apart, with rxSource for example (as these match against the source, not the import name).  
-This group needs to have a higher priority than 'named' group for it to be enabled.
+  It is not possible to further split them apart, with rxSource for example (as these match against the source, not the import name).  
+  This group needs to have a higher priority than 'named' group for it to be enabled.
 
 - type - when using 'recommended' config, this group is used for 'type' imports.  
-It is not possible to further split them apart.
+  It is not possible to further split them apart.
 
 - asset - when using 'recommended' config, this group is used for imports of 'static' assets (pictures and the like)
-that have no side effects.  
-Otherwise there is nothing special about this group.  
-Adjust `rxSource` for this group (or submit PR) to add more file types to this group.
+  that have no side effects.  
+  Otherwise there is nothing special about this group.  
+  Adjust `rxSource` for this group (or submit PR) to add more file types to this group.
 
 - style - when using 'recommended' config, this group is used for imports of 'style' assets (css files and the like).  
-'sideEffect' type imports are not sorted by default.  
-Otherwise there is nothing special about this group.  
-Adjust `rxSource` for this group (or submit PR) to add more file types to this group.
+  'sideEffect' type imports are not sorted by default.  
+  Otherwise there is nothing special about this group.  
+  Adjust `rxSource` for this group (or submit PR) to add more file types to this group.
 
 ##### separateGroups
 
