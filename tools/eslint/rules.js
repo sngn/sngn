@@ -1,5 +1,8 @@
 /* eslint-disable sort-keys */
 
+/** @typedef {import("eslint").Linter.RulesRecord} RulesRecord */
+
+/** @type {RulesRecord} */
 const rules = {
   /* ### Possible Errors ### */
   "no-await-in-loop": "warn",

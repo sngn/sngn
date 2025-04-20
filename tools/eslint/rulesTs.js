@@ -1,3 +1,6 @@
+/** @typedef {import("eslint").Linter.RulesRecord} RulesRecord */
+
+/** @type {RulesRecord} */
 const rules = {
   "@typescript-eslint/explicit-module-boundary-types": [
     //"off",

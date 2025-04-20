@@ -1,6 +1,6 @@
 packages:
-  - "pkgs/esbuild-svelte-dts"
-  - "pkgs/get-tsconfig-from-path"
-  - "pkgs/js-helpers"
-  - "pkgs/logger"
+  - pkgs/esbuild-svelte-dts
+  - pkgs/get-tsconfig-from-path
+  - pkgs/js-helpers
+  - pkgs/logger
 

@@ -12,15 +12,10 @@ import { default as splitAndSortImports } from "@sngn/eslint-plugin-split-and-so
 import { default as svelte } from "eslint-plugin-svelte";
 import { default as tseslint } from "typescript-eslint";
 
-/** @typedef {import("eslint").Linter.Config} Config */
-
 // ### ### ###
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-
-const splitAndSortImports_config_recommended = /** @type {Config[]} */ (splitAndSortImports.configs?.["recommended"] ?? []);
 
 export default tseslint.config(
   eslintjs.configs.recommended,
@@ -29,7 +24,7 @@ export default tseslint.config(
   ...svelte.configs["flat/recommended"], // must come after tseslint.configs.recommendedTypeChecked
   ...svelte.configs["flat/prettier"], // must come after tseslint.configs.recommendedTypeChecked
   prettierRecommended,
-  ...splitAndSortImports_config_recommended,
+  ...splitAndSortImports.configs["recommended"],
   {
     /* prettier-ignore */
     ignores: [
